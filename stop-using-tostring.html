@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Why getValue() is faster than toString() in ServiceNow GlideRecord loops — and when it actually matters.">
+  <meta name="keywords" content="ServiceNow, GlideRecord, getValue, toString, performance, scripting">
+  <title>Stop Using toString() in Your GlideRecord Loops | NowSpectrum</title>
+  <link rel="icon" type="image/png" href="../assets/nowspectrum-white-icon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo"><img src="../assets/horizontal-logo.svg" alt="NowSpectrum" class="logo-img"></a>
+    <ul class="nav-links">
+      <li><a href="../index.html" class="nav-link">Home</a></li>
+      <li><a href="../products.html" class="nav-link">Products</a></li>
+      <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+      <li><a href="../about.html" class="nav-link">About</a></li>
+      <li><a href="../contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse Products</a>
+    <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="../index.html" class="nav-link">Home</a>
+    <a href="../products.html" class="nav-link">Products</a>
+    <a href="../services.html" class="nav-link">Services</a>
+    <a href="../blog.html" class="nav-link">Blog</a>
+    <a href="../about.html" class="nav-link">About</a>
+    <a href="../contact.html" class="nav-link">Contact</a>
+    <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse Products</a>
+  </div>
+</nav>
+
+<div style="padding-top: 64px;">
+  <div class="post-layout">
+
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Scripting</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">Stop Using toString() in Your GlideRecord Loops</h1>
+      <p class="post-intro">One small change that makes your scripts noticeably faster. Most ServiceNow developers do this without thinking — here is why getValue() is always the right call, and what is actually happening under the hood.</p>
+    </div>
+
+    <div class="post-divider"></div>
+
+    <div class="post-body">
+
+      <h2>The pattern most developers use</h2>
+      <p>If you have been writing ServiceNow scripts for any length of time, you have probably written something like this:</p>
+
+      <pre><code>var gr = new GlideRecord('incident');
+gr.addQuery('active', true);
+gr.query();
+while (gr.next()) {
+  var state = gr.state.toString();
+  var priority = gr.priority.toString();
+  // do something with state and priority
+}</code></pre>
+
+      <p>It works. The code runs. So what is the problem?</p>
+
+      <h2>What toString() actually does</h2>
+      <p>When you call <code>gr.state.toString()</code>, ServiceNow does not just return the stored value. It triggers the field's display value resolution process — it goes through the field type handler to produce a human-readable output.</p>
+      <p>For a Choice field like <code>state</code>, this means resolving the choice label from the choice list. For a Reference field, it means looking up the display value of the referenced record. For a simple String field it is mostly harmless, but the overhead still exists.</p>
+      <p>In a loop over 10 records, the difference is negligible. In a loop over 500 records, it adds up. In a scheduled job processing thousands of records, it can add meaningful seconds to your execution time.</p>
+
+      <h2>The right way: getValue()</h2>
+      <pre><code>var gr = new GlideRecord('incident');
+gr.addQuery('active', true);
+gr.query();
+while (gr.next()) {
+  var state = gr.getValue('state');
+  var priority = gr.getValue('priority');
+  // do something with state and priority
+}</code></pre>
+
+      <p><code>getValue('field')</code> returns the raw database value directly — no display value resolution, no type handler overhead. For a Choice field like state, you get back the stored key (e.g., <code>1</code> for New, <code>2</code> for In Progress). For a Reference field you get the sys_id of the referenced record.</p>
+
+      <h2>When to use each method</h2>
+      <p>This is the part most guides skip. It is not that <code>toString()</code> is always wrong — it is that most developers use it when they do not need it.</p>
+      <ul>
+        <li><strong>Use getValue()</strong> when you are comparing values, building encoded queries, or passing values to other scripts. You want the raw stored value.</li>
+        <li><strong>Use getDisplayValue()</strong> when you are building a notification message, populating a UI display, or writing to a work note that a human will read. You want the human-readable label.</li>
+        <li><strong>Avoid toString()</strong> in scripts. It is less explicit than the two options above and adds unnecessary processing.</li>
+      </ul>
+
+      <h2>A real example where this matters</h2>
+      <p>Imagine a scheduled job that runs nightly and processes 2,000 active incidents — checking priorities and updating assignment groups. Using toString() on three fields per record = 6,000 unnecessary display value lookups per run. Switch to getValue() and the job runs noticeably faster with lower server load.</p>
+
+      <pre><code>// AVOID this in loops
+var assigned = gr.assigned_to.toString();  // resolves display name
+var group = gr.assignment_group.toString(); // resolves group name
+
+// DO this instead
+var assignedId = gr.getValue('assigned_to');       // raw sys_id
+var groupId = gr.getValue('assignment_group');     // raw sys_id
+
+// Only use getDisplayValue() if you actually need the name
+var groupName = gr.getDisplayValue('assignment_group'); // only when needed</code></pre>
+
+      <h2>The rule to remember</h2>
+      <p>If you are using the value for logic, comparison, or script processing — use <code>getValue()</code>. If you are using the value for display or human-readable output — use <code>getDisplayValue()</code>. Never default to <code>toString()</code> just because it is familiar.</p>
+      <p>It is a small habit change. Over a career of writing ServiceNow scripts, it makes a real difference.</p>
+
+    </div>
+
+    <div class="post-cta-box">
+      <h3>50 more tips like this one</h3>
+      <p>The ServiceNow Pro Tips & Tricks cheat sheet covers 50 battle-tested performance, scripting, debugging, and Flow Designer tips — all in one 14-page PDF.</p>
+      <a href="https://store.nowspectrum.com/l/pro-tips" target="_blank" class="btn btn-primary">Get Pro Tips & Tricks — $19</a>
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border);">
+      <a href="../blog.html" style="color: var(--green); font-weight: 600; font-size: 14px;">← Back to all posts</a>
+    </div>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="../assets/horizontal-logo.svg" alt="NowSpectrum" class="footer-logo">
+        <p class="footer-tagline">ServiceNow Knowledge —<br>Simplified, Packaged, Sold.</p>
+        <div class="footer-socials">
+          <a href="https://x.com/nowspectrumhq" target="_blank" class="social-link">𝕏</a>
+          <a href="https://linkedin.com/company/nowspectrum" target="_blank" class="social-link">in</a>
+          <a href="https://youtube.com/@nowspectrum" target="_blank" class="social-link">▶</a>
+          <a href="https://instagram.com/nowspectrumhq" target="_blank" class="social-link">ig</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Products</h4>
+        <ul class="footer-links"><li><a href="https://store.nowspectrum.com" target="_blank">All Products</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Resources</h4>
+        <ul class="footer-links">
+          <li><a href="../blog.html">Blog</a></li>
+          <li><a href="https://nowspectrum.beehiiv.com/subscribe" target="_blank">Newsletter</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Connect</h4>
+        <ul class="footer-links"><li><a href="mailto:nowspectrumhq@gmail.com">Email Us</a></li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 NowSpectrum. All rights reserved.</p>
+      <p>Built for ServiceNow professionals.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
