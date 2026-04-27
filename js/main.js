@@ -1,19 +1,25 @@
 // NowSpectrum — Main JS
+// Header/Footer are injected by components/header.js and components/footer.js
+// This file handles page-specific interactions
 
-// Nav scroll effect
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav?.classList.toggle('scrolled', window.scrollY > 20);
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
 });
 
-// Mobile nav toggle
-const toggle = document.getElementById('navToggle');
-const mobile = document.getElementById('navMobile');
-toggle?.addEventListener('click', () => {
-  mobile?.classList.toggle('open');
-});
+// Intersection observer for fade-in animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
 
-// Close mobile nav on link click
-document.querySelectorAll('.nav-mobile .nav-link, .nav-mobile .btn').forEach(link => {
-  link.addEventListener('click', () => mobile?.classList.remove('open'));
-});
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
