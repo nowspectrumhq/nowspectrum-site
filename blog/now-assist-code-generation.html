@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How to use Now Assist code generation and explanation features in the ServiceNow Script Editor.">
+  <title>Now Assist for Developers: Code Generation and Explanation in the Platform IDE | NowSpectrum</title>
+  <link rel="icon" type="image/png" href="../assets/nowspectrum-white-icon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Now Assist</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">Now Assist for Developers: Code Generation and Explanation in the Platform IDE</h1>
+      <p class="post-intro">Now Assist for Developers embeds AI code assistance directly in the ServiceNow Script Editor. Here is what it can do, how to use it effectively, and its current limitations.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>Accessing Now Assist in the Script Editor</h2><p>In any script field (Business Rules, Script Includes, Client Scripts, etc.), look for the Now Assist icon in the script editor toolbar. If the plugin is activated and you have the now_assist_user role, it will be visible.</p><h2>Code generation from comments</h2><p>Type a comment describing what you want the code to do, then trigger generation:</p><pre><code>// Query all active incidents assigned to the current user
+// ordered by priority, return as JSON array</code></pre><p>Now Assist generates a code suggestion based on the comment. Review it before accepting — it will not know your specific custom fields or business logic.</p><h2>Code explanation</h2><p>Select existing code in the editor and use the "Explain" option. Now Assist returns a plain-English explanation of what the selected code does. Useful for:</p><ul><li>Understanding inherited scripts from previous developers</li><li>Reviewing complex regex or encoded query logic</li><li>Onboarding new team members to existing code</li></ul><h2>What it is good at</h2><ul><li>Standard GlideRecord query patterns</li><li>Common utility functions (date formatting, string manipulation)</li><li>Boilerplate Script Include structures</li><li>Simple transform map scripts</li></ul><h2>What it struggles with</h2><ul><li>Custom business logic specific to your instance</li><li>Complex multi-table query patterns</li><li>Encoding edge cases in encoded queries</li><li>Anything involving your custom field names (it does not know them)</li></ul><h2>Review everything</h2><p>Treat Now Assist code suggestions like Stack Overflow answers — they are a starting point, not a final answer. Always review for: correct table names, field names that match your instance, logic that matches your actual requirements, and error handling.</p>
+    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

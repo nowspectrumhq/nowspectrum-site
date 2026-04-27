@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Step-by-step guide to activating Now Assist on your ServiceNow instance — plugins, entitlements, and configuration.">
+  <title>How to Activate Now Assist on Your ServiceNow Instance | NowSpectrum</title>
+  <link rel="icon" type="image/png" href="../assets/nowspectrum-white-icon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Now Assist</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">How to Activate Now Assist on Your ServiceNow Instance</h1>
+      <p class="post-intro">Activating Now Assist is not a single button click. It involves plugins, entitlements, and configuration steps that vary depending on which Now Assist capabilities you want. Here is the complete process.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>Prerequisites</h2><ul><li>ServiceNow Washington DC release or later</li><li>Now Assist entitlement in your contract (verify with your ServiceNow account team)</li><li>Admin role on your instance</li><li>Pro or Enterprise Plus licence tier (some capabilities require higher tier)</li></ul><h2>Step 1: Activate the base plugin</h2><p>Navigate to <strong>System Applications > All Available Applications > All</strong>. Search for "Now Assist" and activate <strong>Now Assist Platform (com.sn_now_assist)</strong>. This is the base plugin required for all Now Assist features.</p><h2>Step 2: Activate feature-specific plugins</h2><p>Each Now Assist feature area has its own plugin:</p><ul><li>Now Assist for ITSM: <code>com.sn_now_assist_itsm</code></li><li>Now Assist for Developers: <code>com.sn_now_assist_developers</code></li><li>AI Search: <code>com.sn_unified_search</code></li><li>Now Assist for HR: <code>com.sn_now_assist_hr</code></li></ul><h2>Step 3: Configure AI Model connections</h2><p>Navigate to <strong>Now Assist > Administration > AI Model Configurations</strong>. ServiceNow instances connect to Microsoft Azure OpenAI by default. Verify the connection is active and the entitlement is validated.</p><h2>Step 4: Enable specific capabilities</h2><p>For each Now Assist feature, navigate to its specific configuration page and enable it. For ITSM, navigate to <strong>Now Assist > Settings > ITSM</strong> and enable Incident Summarisation, Resolution Notes, etc. individually.</p><h2>Step 5: Assign the Now Assist role</h2><p>Users need the <code>now_assist_user</code> role to access Now Assist features. Assign this role to agents who should have access to AI-generated summaries and suggestions.</p><h2>Testing activation</h2><p>Open an existing incident with several work notes. You should see a "Summarize" button in the incident header. Click it — if Now Assist is correctly activated, a summary generates in a few seconds.</p>
+    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Understand how ServiceNow ACLs work — evaluation order, types, script ACLs, and common patterns for developers.">
+  <title>ACLs in ServiceNow: A Developer's Complete Guide to Access Control | NowSpectrum</title>
+  <link rel="icon" type="image/png" href="../assets/nowspectrum-white-icon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Admin</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">ACLs in ServiceNow: A Developer's Complete Guide to Access Control</h1>
+      <p class="post-intro">Access Control Lists (ACLs) are the primary security mechanism in ServiceNow. They control who can read, write, create, and delete records — and when improperly configured, they cause confusing access issues that are hard to diagnose. Here is how they actually work.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>ACL types</h2>
+<ul>
+<li><strong>Record (table)</strong> — controls access to an entire table or specific records</li>
+<li><strong>Field</strong> — controls access to a specific field on a table</li>
+<li><strong>UI Action</strong> — controls visibility of buttons and menu items</li>
+<li><strong>Business Rule</strong> — rarely used directly for access control</li>
+</ul>
+<h2>ACL operations</h2>
+<p>Each ACL is associated with an operation:</p>
+<ul>
+<li><strong>read</strong> — can the user see this record/field?</li>
+<li><strong>write</strong> — can the user modify this field?</li>
+<li><strong>create</strong> — can the user create records on this table?</li>
+<li><strong>delete</strong> — can the user delete records on this table?</li>
+</ul>
+<h2>How ACLs are evaluated</h2>
+<p>When a user tries to access a record, ServiceNow evaluates all applicable ACLs in order of specificity. More specific ACLs (table.field) override less specific ones (table.*).</p>
+<p>An ACL passes if: the user has the required role AND the condition script returns true. If no ACL matches, access is denied by default.</p>
+<h2>Script ACLs</h2>
+<p>For dynamic access control, use the Script field on the ACL. Return true to grant access, false to deny:</p>
+<pre><code>// Grant access only if assigned to current user
+answer = (current.assigned_to == gs.getUserID());
+
+// Grant access if user has role OR is the caller
+answer = gs.hasRole('itil') || (current.caller_id == gs.getUserID());</code></pre>
+<h2>Elevated privilege ACLs</h2>
+<p>Roles with "Elevated privilege" require the user to explicitly elevate (re-authenticate) before the role grants access. Used for admin-level operations that require conscious intent.</p>
+<h2>Debugging ACL issues</h2>
+<p>Navigate to <strong>System Security > Access Control (ACL)</strong> and use the Security Policy Check page to test whether a specific user can access a specific table/field. Always check here before assuming a display issue is a UI problem.</p>
+<h2>Common mistakes</h2>
+<p><strong>Mistake:</strong> Creating an ACL on a table with a script that queries another table — this can cause circular queries and performance issues. Keep ACL scripts lightweight.</p>
+<p><strong>Mistake:</strong> Forgetting that field-level ACLs stack with table-level ACLs. A user needs to pass both the table read ACL and the field read ACL to see a field's value.</p>    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

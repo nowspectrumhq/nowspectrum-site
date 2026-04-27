@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Complete guide to making outbound REST API calls in ServiceNow using RESTMessageV2 — authentication, response handling, and error management.">
+  <title>Outbound REST Calls in ServiceNow: RESTMessageV2 Complete Guide | NowSpectrum</title>
+  <link rel="icon" type="image/png" href="../assets/nowspectrum-white-icon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Integrations</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">Outbound REST Calls in ServiceNow: RESTMessageV2 Complete Guide</h1>
+      <p class="post-intro">RESTMessageV2 is the API you use for scripted outbound HTTP calls from ServiceNow. Here is the complete reference for making calls, handling responses, and managing errors properly.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>Basic GET request</h2><pre><code>var rm = new sn_ws.RESTMessageV2();
+rm.setHttpMethod('GET');
+rm.setEndpoint('https://api.example.com/v1/users');
+rm.setRequestHeader('Authorization', 'Bearer ' + token);
+rm.setRequestHeader('Content-Type', 'application/json');
+
+var response = rm.execute();
+var statusCode = response.getStatusCode();
+var body = response.getBody();
+
+if (statusCode == 200) {
+    var data = JSON.parse(body);
+    gs.log('Users returned: ' + data.users.length);
+} else {
+    gs.error('API call failed: ' + statusCode + ' - ' + body);
+}</code></pre><h2>POST request with JSON body</h2><pre><code>var rm = new sn_ws.RESTMessageV2();
+rm.setHttpMethod('POST');
+rm.setEndpoint('https://api.example.com/v1/incidents');
+rm.setRequestHeader('Content-Type', 'application/json');
+rm.setRequestHeader('Authorization', 'Bearer ' + token);
+
+var payload = {
+    title: current.getValue('short_description'),
+    severity: current.getValue('urgency'),
+    reference: current.getValue('number')
+};
+rm.setRequestBody(JSON.stringify(payload));
+
+var response = rm.execute();
+var statusCode = response.getStatusCode();</code></pre><h2>Using a named REST Message</h2><p>For reusable configurations, create a REST Message record at <strong>System Web Services > Outbound > REST Message</strong>. Define base URL, authentication, and HTTP methods. Then call it by name:</p><pre><code>var rm = new sn_ws.RESTMessageV2('My External API', 'Create Incident');
+rm.setStringParameterNoEscape('short_description', current.getValue('short_description'));
+var response = rm.execute();</code></pre><h2>Asynchronous execution</h2><pre><code>// Returns immediately, response handled via callback
+rm.executeAsync(callbackFunctionName);</code></pre><h2>Error handling</h2><pre><code>try {
+    var response = rm.execute();
+    if (response.getStatusCode() >= 400) {
+        gs.error('HTTP error: ' + response.getStatusCode());
+    }
+} catch (ex) {
+    gs.error('REST call failed: ' + ex.getMessage());
+}</code></pre>
+    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

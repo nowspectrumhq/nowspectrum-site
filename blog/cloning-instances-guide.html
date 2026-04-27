@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Understand ServiceNow instance cloning — what is preserved, what is wiped, and how to prepare your sub-production instance for a clean clone.">
+  <title>Cloning ServiceNow Instances: What Gets Copied and What Gets Wiped | NowSpectrum</title>
+  <link rel="icon" type="image/png" href="../assets/nowspectrum-white-icon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Admin</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">Cloning ServiceNow Instances: What Gets Copied and What Gets Wiped</h1>
+      <p class="post-intro">Cloning is how you refresh your sub-production (dev/test) instances with production data. But not everything clones cleanly — and finding out after the fact causes problems. Here is what to know before every clone.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>What is an instance clone?</h2><p>A clone copies a source instance (usually production) to a target instance (usually dev or test). The target's database is replaced with the source's database. This gives your dev/test team a fresh copy of production data to work with.</p><h2>What IS cloned</h2><ul><li>All database records (incidents, users, CIs, configurations)</li><li>Custom tables and their data</li><li>Update Sets in the source instance</li><li>Attachments (configurable)</li><li>All custom code (Business Rules, Script Includes, etc.)</li></ul><h2>What is WIPED by default</h2><ul><li>Integration credentials (HTTP credentials, OAuth tokens)</li><li>Scheduled job execution history</li><li>Email configuration (send is disabled post-clone)</li><li>MID Server credentials</li><li>Encryption keys (configurable)</li></ul><h2>Clone excludes (protect your dev config)</h2><p>Before cloning, set up Clone Excludes for things you do NOT want overwritten. Common excludes:</p><ul><li>Your dev Update Sets (the clone would wipe them with prod's sets)</li><li>Dev-specific integration endpoints</li><li>Test user accounts</li></ul><p>Navigate to <strong>System Clone > Exclude Tables</strong> and <strong>Exclude Records</strong> to configure.</p><h2>Post-clone checklist</h2><ol><li>Verify email sending is disabled (System Properties > Email)</li><li>Reconfigure integration credentials</li><li>Restart MID Servers and reconfigure credentials</li><li>Set your current Update Set</li><li>Verify scheduled jobs are paused or redirected appropriately</li><li>Test critical integrations against test endpoints, not production</li></ol><h2>Clone frequency</h2><p>Most teams clone quarterly or before a major development effort. More frequent clones give developers fresher data but require more post-clone reconfiguration effort.</p>
+    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

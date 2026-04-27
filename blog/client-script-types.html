@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Understand the four ServiceNow Client Script types and exactly when each fires.">
+  <title>Client Script Types: onLoad, onChange, onSubmit — When to Use Each | NowSpectrum</title>
+  <link rel="icon" type="image/png" href="../assets/nowspectrum-white-icon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Scripting</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">Client Script Types: onLoad, onChange, onSubmit — When to Use Each</h1>
+      <p class="post-intro">There are four Client Script types in ServiceNow. Each fires at a different point in the form lifecycle. Knowing exactly when each fires stops you from writing scripts that silently do nothing — which is the most common Client Script mistake.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>onLoad</h2>
+<p>Fires once when the form loads. Use it to set initial field values, show/hide fields based on loaded data, or call GlideAjax to fetch data you need on page load.</p>
+<pre><code>function onLoad() {
+    // Hide the resolution field when form first loads if not resolved
+    if (g_form.getValue('state') != '6') {
+        g_form.setVisible('resolution_notes', false);
+    }
+}</code></pre>
+<p>Do not put logic here that should run on field changes — it will not re-run when a field changes.</p>
+<h2>onChange</h2>
+<p>Fires when a specific field value changes. You specify which field triggers it in the Script record. The function receives the new value.</p>
+<pre><code>function onChange(control, oldValue, newValue, isLoading) {
+    if (isLoading || newValue === '') return;
+    // Only runs when the field actually changes, not on load
+    if (newValue == '6') {
+        g_form.setMandatory('resolution_notes', true);
+        g_form.setVisible('resolution_notes', true);
+    } else {
+        g_form.setMandatory('resolution_notes', false);
+        g_form.setVisible('resolution_notes', false);
+    }
+}</code></pre>
+<p><strong>Critical:</strong> Always check <code>isLoading</code> and return early if true. onChange fires once on load with <code>isLoading = true</code> — without this check your script runs twice on page load.</p>
+<h2>onSubmit</h2>
+<p>Fires when the user submits the form (Save button). Return false to cancel the submission:</p>
+<pre><code>function onSubmit() {
+    if (g_form.getValue('state') == '6' && g_form.getValue('resolution_notes') == '') {
+        alert('Resolution notes are required when resolving an incident.');
+        return false; // Cancels the save
+    }
+}</code></pre>
+<h2>onCellEdit</h2>
+<p>Fires when a cell is edited in a list view — not on forms. Less commonly used but useful for list-based editing validation.</p>
+<h2>g_form methods you actually use</h2>
+<ul>
+<li><code>g_form.getValue('field_name')</code> — get display value</li>
+<li><code>g_form.setValue('field_name', value)</code> — set value</li>
+<li><code>g_form.setMandatory('field_name', true/false)</code> — make mandatory</li>
+<li><code>g_form.setVisible('field_name', true/false)</code> — show/hide field</li>
+<li><code>g_form.setReadOnly('field_name', true/false)</code> — make read-only</li>
+<li><code>g_form.showFieldMsg('field_name', 'message', 'error')</code> — show inline message</li>
+</ul>    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

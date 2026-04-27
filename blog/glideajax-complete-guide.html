@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Complete guide to GlideAjax in ServiceNow. Set up the Script Include, write the client call, and handle the response correctly.">
+  <title>GlideAjax: How to Call Server-Side Code from Client Scripts | NowSpectrum</title>
+  <link rel="icon" type="image/png" href="../assets/nowspectrum-white-icon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Scripting</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">GlideAjax: How to Call Server-Side Code from Client Scripts</h1>
+      <p class="post-intro">GlideAjax is the bridge between client-side JavaScript (running in the browser) and server-side Script Includes (running on the ServiceNow server). It is how you fetch data from the server without causing a full form reload.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+
+      <h2>When to use GlideAjax</h2>
+      <p>Use GlideAjax when a Client Script needs data that is only available on the server — like querying a related table, checking a user's group membership, or fetching a value from a reference field that isn't on the current form.</p>
+      <p>Do not use GlideAjax for simple display logic that can be done client-side with data already on the form.</p>
+
+      <h2>Step 1: Create the server-side Script Include</h2>
+      <p>The Script Include must be client callable and extend AbstractAjaxProcessor:</p>
+      <pre><code>var GetUserGroups = Class.create();
+GetUserGroups.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+    getGroups: function() {
+        var userId = this.getParameter('sysparm_user_id');
+        var groups = [];
+        var gr = new GlideRecord('sys_user_grmember');
+        gr.addQuery('user', userId);
+        gr.query();
+        while (gr.next()) {
+            groups.push(gr.group.getDisplayValue());
+        }
+        return JSON.stringify(groups);
+    },
+    type: 'GetUserGroups'
+});</code></pre>
+
+      <h2>Step 2: Write the Client Script</h2>
+      <pre><code>function onChange(control, oldValue, newValue, isLoading) {
+    if (isLoading || newValue === '') return;
+    
+    var ga = new GlideAjax('GetUserGroups');
+    ga.addParam('sysparm_name', 'getGroups');
+    ga.addParam('sysparm_user_id', newValue);
+    ga.getXMLAnswer(function(response) {
+        var groups = JSON.parse(response);
+        console.log('User groups: ' + groups.join(', '));
+    });
+}</code></pre>
+
+      <h2>Synchronous vs asynchronous calls</h2>
+      <p>Use <code>getXMLAnswer(callback)</code> for asynchronous calls — always prefer this. The callback receives the return value from your Script Include method as a string.</p>
+      <p>Avoid <code>getXML()</code> and synchronous patterns — they block the browser UI and are deprecated.</p>
+
+      <h2>Passing multiple parameters</h2>
+      <pre><code>ga.addParam('sysparm_name', 'myMethod');
+ga.addParam('sysparm_param1', value1);
+ga.addParam('sysparm_param2', value2);</code></pre>
+      <p>On the server side, retrieve with <code>this.getParameter('sysparm_param1')</code>.</p>
+
+      <h2>Returning complex data</h2>
+      <p>Return values must be strings. Use JSON.stringify() for complex objects and JSON.parse() in the callback to deserialise:</p>
+      <pre><code>// Server: return JSON.stringify({count: 5, items: [...]});
+// Client: var data = JSON.parse(response);</code></pre>
+
+      <h2>Error handling</h2>
+      <p>Always validate parameters on the server before using them. If a parameter is missing or invalid, return a JSON object with an error field rather than throwing an exception, which gives the client a way to handle it gracefully.</p>
+        </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

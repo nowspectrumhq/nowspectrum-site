@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A practical guide to handling HTTP status codes in ServiceNow REST integrations — what each code means and how to respond.">
+  <title>HTTP Status Codes in ServiceNow Integrations: What Each One Means and How to Handle It | NowSpectrum</title>
+  <link rel="icon" type="image/png" href="../assets/nowspectrum-white-icon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Integrations</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">HTTP Status Codes in ServiceNow Integrations: What Each One Means and How to Handle It</h1>
+      <p class="post-intro">When building REST integrations in ServiceNow, every response has a status code. Knowing what each code means — and how to handle it properly — is the difference between robust integrations and ones that fail silently.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>2xx Success codes</h2><p><strong>200 OK</strong> — request succeeded, body contains the result. Standard for GET and PATCH.</p><p><strong>201 Created</strong> — resource was created, body contains the new resource. Standard for POST. Check Location header for the new resource URL.</p><p><strong>204 No Content</strong> — success with no response body. Standard for DELETE. Don't try to parse the body — there is none.</p><h2>4xx Client error codes</h2><p><strong>400 Bad Request</strong> — your request is malformed. Check: JSON syntax, required fields, field value formats. Fix your request, not a retry situation.</p><p><strong>401 Unauthorized</strong> — authentication failed. Token is missing, expired, or invalid. Refresh the token if using OAuth; otherwise check credentials.</p><p><strong>403 Forbidden</strong> — authenticated but not permitted. The user/service has no ACL access to this resource. Not fixable with retry — requires permission change.</p><p><strong>404 Not Found</strong> — the resource does not exist. The sys_id you referenced may have been deleted, or you have a URL typo.</p><p><strong>422 Unprocessable Entity</strong> — request syntax is correct but semantic validation failed. A field value doesn't match allowed values, a reference doesn't exist, etc.</p><p><strong>429 Too Many Requests</strong> — rate limited. Check the Retry-After header if present. Implement exponential backoff.</p><h2>5xx Server error codes</h2><p><strong>500 Internal Server Error</strong> — the server crashed processing your request. Often a bug on the remote end. Log and retry with backoff.</p><p><strong>503 Service Unavailable</strong> — service is down or overloaded. Retry with backoff, alert if persistent.</p><h2>Handling in ServiceNow scripts</h2><pre><code>var response = rm.execute();
+var status = response.getStatusCode();
+
+if (status >= 200 && status < 300) {
+    // Success - process response
+} else if (status == 401) {
+    // Re-authenticate
+    refreshOAuthToken();
+} else if (status == 429) {
+    // Rate limited - queue for retry
+    gs.eventQueue('integration.retry', current, rm.getEndpoint(), '');
+} else if (status >= 500) {
+    // Server error - log and retry
+    gs.error('External service error: ' + status);
+} else {
+    // 4xx client error - log and do not retry
+    gs.error('Request error: ' + status + ' - ' + response.getBody());
+}</code></pre>
+    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

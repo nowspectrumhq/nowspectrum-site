@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The most common GlideRecord anti-patterns that slow ServiceNow instances — and the fixes to use instead.">
+  <title>ServiceNow Performance Tips: Writing GlideRecord Queries That Don't Slow Your Instance | NowSpectrum</title>
+  <link rel="icon" type="image/png" href="../assets/nowspectrum-white-icon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Scripting</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">ServiceNow Performance Tips: Writing GlideRecord Queries That Don't Slow Your Instance</h1>
+      <p class="post-intro">Most ServiceNow performance problems trace back to poorly written GlideRecord queries. Here are the patterns to avoid and the replacements to use instead. These apply in Business Rules, Script Includes, Scheduled Jobs — anywhere GlideRecord runs.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>Anti-pattern 1: Querying without a limit on large tables</h2>
+<pre><code>// Bad - loads ALL incidents into memory
+var gr = new GlideRecord('incident');
+gr.query();
+while (gr.next()) { ... }</code></pre>
+<pre><code>// Good - always set a limit when you don't need everything
+var gr = new GlideRecord('incident');
+gr.addEncodedQuery('active=true^state=1');
+gr.setLimit(100);
+gr.query();</code></pre>
+<h2>Anti-pattern 2: Counting with a loop</h2>
+<pre><code>// Bad
+var count = 0;
+var gr = new GlideRecord('incident');
+gr.query();
+while (gr.next()) { count++; }</code></pre>
+<pre><code>// Good - pushes count to database level
+var ga = new GlideAggregate('incident');
+ga.addEncodedQuery('active=true');
+ga.addAggregate('COUNT');
+ga.query();
+if (ga.next()) { var count = ga.getAggregate('COUNT'); }</code></pre>
+<h2>Anti-pattern 3: Loading unnecessary fields</h2>
+<p>By default GlideRecord loads all columns. Use chooseWindow() or addFieldToSelect() when you only need specific fields on large tables:</p>
+<pre><code>var gr = new GlideRecord('cmdb_ci');
+gr.addEncodedQuery('operational_status=1');
+gr.setWorkflow(false); // Don't fire Business Rules
+gr.query();
+while (gr.next()) {
+    gs.log(gr.getValue('name') + ' - ' + gr.getValue('ip_address'));
+}</code></pre>
+<h2>Anti-pattern 4: GlideRecord inside a loop</h2>
+<pre><code>// Bad - N+1 query problem
+while (gr.next()) {
+    var userGr = new GlideRecord('sys_user');
+    userGr.get(gr.assigned_to);  // Separate DB hit per record
+    gs.log(userGr.name);
+}</code></pre>
+<pre><code>// Good - use dot-walking or getDisplayValue()
+while (gr.next()) {
+    gs.log(gr.assigned_to.getDisplayValue()); // One query, display value resolved
+}</code></pre>
+<h2>Anti-pattern 5: Calling update() in a Before Business Rule</h2>
+<p>In a Before rule, setting values on current and letting the platform save them is free. Calling current.update() inside a Before rule causes an extra database write and can trigger additional Business Rules — potentially causing a loop.</p>
+<h2>setWorkflow(false) and autoSysFields(false)</h2>
+<pre><code>gr.setWorkflow(false);      // Don't run Business Rules on this save
+gr.autoSysFields(false);    // Don't auto-update sys_updated_on etc.</code></pre>
+<p>Use both when doing maintenance updates in Scheduled Jobs where you don't want side effects.</p>    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>
