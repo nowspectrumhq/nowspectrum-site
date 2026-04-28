@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Find your next ServiceNow role. NowSpectrum connects ServiceNow professionals with top companies hiring developers, admins, and architects.">
+  <title>Find a ServiceNow Job | NowSpectrum</title>
+  <link rel="icon" type="image/png" href="assets/nowspectrum-white-icon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .funnel-hero { padding: 120px 0 70px; background: var(--dark); text-align: center; position: relative; overflow: hidden; }
+    .funnel-hero .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(26,86,160,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(26,86,160,0.07) 1px,transparent 1px); background-size: 60px 60px; }
+    .funnel-hero .hero-glow-1 { position: absolute; width: 400px; height: 400px; background: var(--blue); border-radius: 50%; filter: blur(80px); opacity: 0.12; top: -100px; right: -50px; }
+    .funnel-hero .hero-glow-2 { position: absolute; width: 300px; height: 300px; background: var(--green); border-radius: 50%; filter: blur(80px); opacity: 0.1; bottom: -50px; left: -50px; }
+    .funnel-hero .container { position: relative; z-index: 1; }
+    .trust-logos { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 40px; }
+    .trust-pill { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); padding: 8px 18px; border-radius: 100px; font-size: 13px; font-weight: 500; }
+    .how-it-works { padding: 80px 0; background: var(--bg-2); }
+    .steps-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; position: relative; }
+    .steps-row::before { content: ''; position: absolute; top: 22px; left: 10%; right: 10%; height: 2px; background: linear-gradient(90deg, var(--blue), var(--green)); opacity: 0.3; z-index: 0; }
+    .step-box { text-align: center; padding: 24px 16px; position: relative; z-index: 1; }
+    .step-circle { width: 44px; height: 44px; border-radius: 50%; background: var(--blue); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; margin: 0 auto 14px; box-shadow: 0 4px 14px rgba(26,86,160,0.35); }
+    .step-box h4 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .step-box p { font-size: 13px; color: var(--text-3); line-height: 1.6; }
+    .benefits { padding: 80px 0; }
+    .benefits-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+    .benefit-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--shadow); }
+    .benefit-icon { font-size: 28px; margin-bottom: 14px; }
+    .benefit-card h3 { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .benefit-card p { font-size: 14px; color: var(--text-3); line-height: 1.7; }
+    .form-section { padding: 80px 0; background: var(--bg-2); }
+    .form-container { max-width: 680px; margin: 0 auto; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 48px; box-shadow: var(--shadow-xl); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-select { padding: 12px 16px; border: 1px solid var(--border-2); border-radius: var(--radius); font-family: var(--font-body); font-size: 15px; color: var(--text); background: var(--bg); transition: border-color 0.2s; width: 100%; }
+    .form-select:focus { outline: none; border-color: var(--blue); }
+    .form-input:focus, .form-textarea:focus { border-color: var(--blue); }
+    .form-title { font-size: 26px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .form-sub { font-size: 15px; color: var(--text-3); margin-bottom: 32px; }
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; }
+    .checkbox-item { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-2); cursor: pointer; }
+    .checkbox-item input { accent-color: var(--blue); width: 16px; height: 16px; cursor: pointer; }
+    .salary-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(26,86,160,0.08); border: 1px solid rgba(26,86,160,0.2); color: var(--blue); padding: 6px 16px; border-radius: 100px; font-size: 13px; font-weight: 600; margin-bottom: 28px; }
+    @media(max-width:768px) { .steps-row,.benefits-grid { grid-template-columns:1fr 1fr; } .form-row { grid-template-columns:1fr; } .steps-row::before { display:none; } }
+    @media(max-width:480px) { .benefits-grid { grid-template-columns:1fr; } .form-container { padding:28px 20px; } }
+  </style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/horizontal-logo.svg" alt="NowSpectrum" class="logo-img"></a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="products.html" class="nav-link">Products</a></li>
+      <li><a href="services.html" class="nav-link">Services</a></li>
+      <li><a href="hire-a-consultant.html" class="nav-link">Hire a Consultant</a></li>
+      <li><a href="find-a-job.html" class="nav-link active">Find a Job</a></li>
+      <li><a href="blog.html" class="nav-link">Blog</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+    </ul>
+    <a href="hire-a-consultant.html" class="btn btn-primary nav-cta">Hire a Consultant</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="products.html" class="nav-link">Products</a>
+    <a href="services.html" class="nav-link">Services</a>
+    <a href="hire-a-consultant.html" class="nav-link">Hire a Consultant</a>
+    <a href="find-a-job.html" class="nav-link active">Find a Job</a>
+    <a href="blog.html" class="nav-link">Blog</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="hire-a-consultant.html" class="btn btn-primary">Hire a Consultant</a>
+  </div>
+</nav>
+
+<div class="funnel-hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+  <div class="container">
+    <div class="hero-badge"><span class="badge-dot"></span>ServiceNow Career Opportunities</div>
+    <h1 class="hero-title">Your Next<br><span class="text-gradient">ServiceNow Role</span><br>Starts Here</h1>
+    <p class="hero-subtitle">We work with ServiceNow professionals at every level to find contract and permanent roles that match their skills, certifications, and career goals.</p>
+    <a href="#candidate-form" class="btn btn-primary btn-lg">Submit Your Profile →</a>
+    <div class="trust-logos">
+      <span class="trust-pill">CSA Holders</span>
+      <span class="trust-pill">CAD Certified</span>
+      <span class="trust-pill">Senior Developers</span>
+      <span class="trust-pill">Admins</span>
+      <span class="trust-pill">Architects</span>
+      <span class="trust-pill">ITSM Consultants</span>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how-it-works">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Process</span>
+      <h2 class="section-title">How It Works</h2>
+    </div>
+    <div class="steps-row">
+      <div class="step-box"><div class="step-circle">1</div><h4>Submit Your Profile</h4><p>Fill out the form below with your experience, certifications, and preferences</p></div>
+      <div class="step-box"><div class="step-circle">2</div><h4>We Review</h4><p>Our team reviews your profile and matches it against live client requirements</p></div>
+      <div class="step-box"><div class="step-circle">3</div><h4>We Reach Out</h4><p>When we have a match, we contact you directly with the role details</p></div>
+      <div class="step-box"><div class="step-circle">4</div><h4>You Get Placed</h4><p>We handle the introduction and support you through the process</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- BENEFITS -->
+<div class="benefits">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">For Candidates</span>
+      <h2 class="section-title">Why Work With Us</h2>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card"><div class="benefit-icon">🎯</div><h3>ServiceNow Focused</h3><p>We only work in ServiceNow. Every role we have is with a company that takes the platform seriously — not a generic IT recruiter who doesn't understand your stack.</p></div>
+      <div class="benefit-card"><div class="benefit-icon">🔒</div><h3>Your Data Is Private</h3><p>We never share your profile or contact details with any company without your explicit approval first. You are always in control.</p></div>
+      <div class="benefit-card"><div class="benefit-icon">📈</div><h3>Career Guidance</h3><p>Beyond placement — we help you understand which certifications to pursue, how to position your experience, and what the market rates look like at your level.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- FORM -->
+<div class="form-section" id="candidate-form">
+  <div class="container">
+    <div class="form-container">
+      <h2 class="form-title">Submit Your Profile</h2>
+      <p class="form-sub">We will reach out when we have a role that matches your experience and preferences.</p>
+      <form id="job-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <input type="text" class="form-input" placeholder="Your full name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address *</label>
+            <input type="email" class="form-input" placeholder="you@email.com" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-input" placeholder="+1 (555) 000-0000">
+          </div>
+          <div class="form-group">
+            <label class="form-label">LinkedIn Profile</label>
+            <input type="url" class="form-input" placeholder="linkedin.com/in/yourname">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Current Role *</label>
+            <select class="form-select" required>
+              <option value="">Select your current role...</option>
+              <option>System Administrator</option>
+              <option>Application Developer</option>
+              <option>Technical Architect</option>
+              <option>Integration Specialist</option>
+              <option>ITSM Consultant</option>
+              <option>Business Analyst</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Years of Experience *</label>
+            <select class="form-select" required>
+              <option value="">Select experience level...</option>
+              <option>Less than 1 year</option>
+              <option>1–2 years</option>
+              <option>3–5 years</option>
+              <option>5–8 years</option>
+              <option>8+ years</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Certifications Held</label>
+          <div class="checkbox-group" style="margin-top:6px;">
+            <label class="checkbox-item"><input type="checkbox" value="CSA"> CSA</label>
+            <label class="checkbox-item"><input type="checkbox" value="CAD"> CAD</label>
+            <label class="checkbox-item"><input type="checkbox" value="CIS-ITSM"> CIS-ITSM</label>
+            <label class="checkbox-item"><input type="checkbox" value="CIS-ITOM"> CIS-ITOM</label>
+            <label class="checkbox-item"><input type="checkbox" value="CIS-HRSD"> CIS-HRSD</label>
+            <label class="checkbox-item"><input type="checkbox" value="CIS-SecOps"> CIS-SecOps</label>
+            <label class="checkbox-item"><input type="checkbox" value="CTA"> CTA</label>
+            <label class="checkbox-item"><input type="checkbox" value="CTI"> CTI</label>
+            <label class="checkbox-item"><input type="checkbox" value="None yet"> None yet</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Areas of Expertise</label>
+          <div class="checkbox-group" style="margin-top:6px;">
+            <label class="checkbox-item"><input type="checkbox" value="ITSM"> ITSM</label>
+            <label class="checkbox-item"><input type="checkbox" value="ITOM"> ITOM / CMDB</label>
+            <label class="checkbox-item"><input type="checkbox" value="Scripting"> Scripting / Dev</label>
+            <label class="checkbox-item"><input type="checkbox" value="Flow Designer"> Flow Designer</label>
+            <label class="checkbox-item"><input type="checkbox" value="Integrations"> REST Integrations</label>
+            <label class="checkbox-item"><input type="checkbox" value="Service Portal"> Service Portal</label>
+            <label class="checkbox-item"><input type="checkbox" value="HRSD"> HRSD</label>
+            <label class="checkbox-item"><input type="checkbox" value="Now Assist"> Now Assist / AI</label>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Job Type Preference *</label>
+            <select class="form-select" required>
+              <option value="">Select preference...</option>
+              <option>Contract / Freelance only</option>
+              <option>Permanent / Full-Time only</option>
+              <option>Open to both</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Location / Work Preference *</label>
+            <select class="form-select" required>
+              <option value="">Select preference...</option>
+              <option>Remote only</option>
+              <option>On-site only</option>
+              <option>Hybrid</option>
+              <option>Flexible / Open</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Current Location</label>
+            <input type="text" class="form-input" placeholder="City, Country">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Availability</label>
+            <select class="form-select">
+              <option value="">Select availability...</option>
+              <option>Immediately available</option>
+              <option>Available in 2–4 weeks</option>
+              <option>Available in 1–2 months</option>
+              <option>Actively employed, open to opportunities</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Expected Rate / Salary (optional)</label>
+          <input type="text" class="form-input" placeholder="e.g. $90/hr or $120,000/year">
+        </div>
+        <div class="form-group">
+          <label class="form-label">About You</label>
+          <textarea class="form-textarea" placeholder="Tell us about your ServiceNow experience, most notable projects, what kind of role you are looking for, and any other relevant details..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;margin-top:8px;background:var(--blue);box-shadow:0 2px 8px rgba(26,86,160,0.3);">Submit My Profile →</button>
+        <p style="font-size:13px;color:var(--text-3);text-align:center;margin-top:12px;">We only contact you when we have a relevant role. No spam.</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <img src="assets/horizontal-logo.svg" alt="NowSpectrum" class="footer-logo">
+        <p class="footer-tagline">ServiceNow knowledge, talent, and consulting — built by professionals, for professionals.</p>
+        <div class="footer-socials">
+          <a href="https://x.com/nowspectrumhq" target="_blank" class="social-link" aria-label="X">𝕏</a>
+          <a href="https://linkedin.com/company/nowspectrum" target="_blank" class="social-link" aria-label="LinkedIn">in</a>
+          <a href="https://youtube.com/@nowspectrum" target="_blank" class="social-link" aria-label="YouTube">▶</a>
+          <a href="https://instagram.com/nowspectrumhq" target="_blank" class="social-link" aria-label="Instagram">ig</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Talent</h4>
+        <ul class="footer-links">
+          <li><a href="hire-a-consultant.html">Hire a Consultant</a></li>
+          <li><a href="find-a-job.html">Find a Job</a></li>
+          <li><a href="services.html">Our Services</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Products</h4>
+        <ul class="footer-links">
+          <li><a href="https://store.nowspectrum.com/l/integration-guide" target="_blank">Integrations Guide</a></li>
+          <li><a href="https://store.nowspectrum.com/l/interview-prep-kit" target="_blank">Interview Prep Kit</a></li>
+          <li><a href="https://store.nowspectrum.com/l/pro-tips" target="_blank">Pro Tips &amp; Tricks</a></li>
+          <li><a href="https://store.nowspectrum.com" target="_blank">All Products →</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Resources</h4>
+        <ul class="footer-links">
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="https://nowspectrum.beehiiv.com/subscribe" target="_blank">Newsletter</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 NowSpectrum. All rights reserved.</p>
+      <p>Built for ServiceNow professionals.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
