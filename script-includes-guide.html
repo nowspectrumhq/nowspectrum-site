@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how to write ServiceNow Script Includes correctly. When to use them, how to call them from different contexts, and the common mistakes to avoid.">
+  <title>Script Includes in ServiceNow: When, Why, and How to Write Them | NowSpectrum</title>
+  <link rel="icon" type="image/png" href="../assets/nowspectrum-white-icon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <img src="../assets/horizontal-logo.svg" alt="NowSpectrum" class="logo-img">
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html" class="nav-link">Home</a></li>
+      <li><a href="../products.html" class="nav-link">Products</a></li>
+      <li><a href="../services.html" class="nav-link">Services</a></li>
+      <li><a href="../hire-a-consultant.html" class="nav-link">Hire a Consultant</a></li>
+      <li><a href="../find-a-job.html" class="nav-link">Find a Job</a></li>
+      <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+      <li><a href="../about.html" class="nav-link">About</a></li>
+    </ul>
+    <a href="../get-a-quote.html" class="btn btn-primary nav-cta">Get a Quote</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="../index.html" class="nav-link">Home</a>
+    <a href="../products.html" class="nav-link">Products</a>
+    <a href="../services.html" class="nav-link">Services</a>
+    <a href="../hire-a-consultant.html" class="nav-link">Hire a Consultant</a>
+    <a href="../find-a-job.html" class="nav-link">Find a Job</a>
+    <a href="../blog.html" class="nav-link active">Blog</a>
+    <a href="../about.html" class="nav-link">About</a>
+    <a href="../get-a-quote.html" class="btn btn-primary">Get a Quote</a>
+  </div>
+</nav>
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Scripting</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">Script Includes in ServiceNow: When, Why, and How to Write Them</h1>
+      <p class="post-intro">Script Includes are reusable server-side JavaScript libraries you can call from Business Rules, Client Scripts (via GlideAjax), REST APIs, Scheduled Jobs, and anywhere else server-side code runs. They are the right place to put shared logic that multiple scripts need.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+
+      <h2>What problem do Script Includes solve?</h2>
+      <p>Without Script Includes, developers copy and paste the same logic into multiple Business Rules and scheduled jobs. When the logic needs to change, every copy needs updating. Script Includes give you one place to maintain shared server-side code.</p>
+
+      <h2>Basic Script Include structure</h2>
+      <pre><code>var NowSpectrumUtils = Class.create();
+NowSpectrumUtils.prototype = {
+    initialize: function() {},
+    
+    getActiveIncidents: function(assignedTo) {
+        var incidents = [];
+        var gr = new GlideRecord('incident');
+        gr.addEncodedQuery('active=true^assigned_to=' + assignedTo);
+        gr.query();
+        while (gr.next()) {
+            incidents.push({
+                number: gr.getValue('number'),
+                short_description: gr.getValue('short_description'),
+                state: gr.getValue('state')
+            });
+        }
+        return incidents;
+    },
+    
+    type: 'NowSpectrumUtils'
+};</code></pre>
+
+      <h2>Calling a Script Include from a Business Rule</h2>
+      <pre><code>(function executeRule(current, previous) {
+    var utils = new NowSpectrumUtils();
+    var incidents = utils.getActiveIncidents(current.getValue('assigned_to'));
+    gs.log('Active incidents: ' + incidents.length);
+})(current, previous);</code></pre>
+
+      <h2>Static Script Includes (no instantiation needed)</h2>
+      <p>If you tick the <strong>Client callable</strong> checkbox and set the script up as a static class, you can call methods without instantiating:</p>
+      <pre><code>var StaticUtils = {
+    formatDate: function(glideDateTimeStr) {
+        return glideDateTimeStr.substring(0, 10);
+    }
+};</code></pre>
+
+      <h2>Client-callable Script Includes (GlideAjax)</h2>
+      <p>To call a Script Include from a Client Script, you need to:</p>
+      <ol>
+        <li>Check the <strong>Client callable</strong> checkbox on the Script Include record</li>
+        <li>Extend <code>AbstractAjaxProcessor</code></li>
+        <li>Return data using <code>this.newItem()</code></li>
+      </ol>
+      <pre><code>var IncidentAjax = Class.create();
+IncidentAjax.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+    getIncidentCount: function() {
+        var gr = new GlideRecord('incident');
+        gr.addEncodedQuery('active=true');
+        gr.query();
+        return gr.getRowCount().toString();
+    },
+    type: 'IncidentAjax'
+});</code></pre>
+
+      <h2>Common mistakes</h2>
+      <p><strong>Mistake 1:</strong> Putting database queries directly in Business Rule scripts instead of a Script Include. Fix: move all reusable query logic to a Script Include.</p>
+      <p><strong>Mistake 2:</strong> Not returning from functions. Forgetting the <code>return</code> statement means the caller gets <code>undefined</code> silently.</p>
+      <p><strong>Mistake 3:</strong> Calling a non-client-callable Script Include from a Client Script. This throws an error at runtime.</p>
+        </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <img src="../assets/horizontal-logo.svg" alt="NowSpectrum" class="footer-logo">
+        <p class="footer-tagline">ServiceNow knowledge, talent, and consulting — built by professionals, for professionals.</p>
+        <div class="footer-socials">
+          <a href="https://x.com/nowspectrumhq" target="_blank" class="social-link" aria-label="X">𝕏</a>
+          <a href="https://linkedin.com/company/nowspectrum" target="_blank" class="social-link" aria-label="LinkedIn">in</a>
+          <a href="https://youtube.com/@nowspectrum" target="_blank" class="social-link" aria-label="YouTube">▶</a>
+          <a href="https://instagram.com/nowspectrumhq" target="_blank" class="social-link" aria-label="Instagram">ig</a>
+          <a href="https://tiktok.com/@nowspectrumhq" target="_blank" class="social-link" aria-label="TikTok">tt</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Products</h4>
+        <ul class="footer-links">
+          <li><a href="https://store.nowspectrum.com/l/pro-tips" target="_blank">Pro Tips &amp; Tricks</a></li>
+          <li><a href="https://store.nowspectrum.com/l/integration-guide" target="_blank">Integrations Guide</a></li>
+          <li><a href="https://store.nowspectrum.com/l/nowassist-guide" target="_blank">Now Assist Guide</a></li>
+          <li><a href="https://store.nowspectrum.com/l/interview-prep-kit" target="_blank">Interview Prep Kit</a></li>
+          <li><a href="https://store.nowspectrum.com" target="_blank">All Products →</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Resources</h4>
+        <ul class="footer-links">
+          <li><a href="../blog.html">Blog</a></li>
+          <li><a href="https://nowspectrum.beehiiv.com/subscribe" target="_blank">Newsletter</a></li>
+          <li><a href="../services.html">Services</a></li>
+          <li><a href="../about.html">About</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Connect</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:nowspectrumhq@gmail.com">Email Us</a></li>
+          <li><a href="../contact.html">Contact Form</a></li>
+          <li><a href="https://nowspectrum.beehiiv.com/subscribe" target="_blank">Newsletter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 NowSpectrum. All rights reserved.</p>
+      <p>Built for ServiceNow professionals.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

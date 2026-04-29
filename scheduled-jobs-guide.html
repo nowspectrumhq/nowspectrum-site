@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A practical guide to ServiceNow Scheduled Jobs — creating, configuring, and troubleshooting server-side scripts that run on a timer.">
+  <title>Scheduled Jobs in ServiceNow: How to Create and Manage Them | NowSpectrum</title>
+  <link rel="icon" type="image/png" href="../assets/nowspectrum-white-icon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <img src="../assets/horizontal-logo.svg" alt="NowSpectrum" class="logo-img">
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html" class="nav-link">Home</a></li>
+      <li><a href="../products.html" class="nav-link">Products</a></li>
+      <li><a href="../services.html" class="nav-link">Services</a></li>
+      <li><a href="../hire-a-consultant.html" class="nav-link">Hire a Consultant</a></li>
+      <li><a href="../find-a-job.html" class="nav-link">Find a Job</a></li>
+      <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+      <li><a href="../about.html" class="nav-link">About</a></li>
+    </ul>
+    <a href="../get-a-quote.html" class="btn btn-primary nav-cta">Get a Quote</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="../index.html" class="nav-link">Home</a>
+    <a href="../products.html" class="nav-link">Products</a>
+    <a href="../services.html" class="nav-link">Services</a>
+    <a href="../hire-a-consultant.html" class="nav-link">Hire a Consultant</a>
+    <a href="../find-a-job.html" class="nav-link">Find a Job</a>
+    <a href="../blog.html" class="nav-link active">Blog</a>
+    <a href="../about.html" class="nav-link">About</a>
+    <a href="../get-a-quote.html" class="btn btn-primary">Get a Quote</a>
+  </div>
+</nav>
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Admin</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">Scheduled Jobs in ServiceNow: How to Create and Manage Them</h1>
+      <p class="post-intro">Scheduled Jobs are server-side scripts that run automatically on a schedule — daily cleanups, recurring reports, batch processing, integration syncs. Here is how to create and manage them properly.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>Types of scheduled work</h2><p>ServiceNow has several types of scheduled execution:</p><ul><li><strong>Scheduled Script Execution</strong> — runs a server-side script on a schedule. Most commonly used.</li><li><strong>Scheduled Import Set</strong> — runs a data import on schedule</li><li><strong>Scheduled Report</strong> — generates and emails a report</li><li><strong>Scheduled Flow</strong> — triggers a Flow Designer flow on a schedule</li></ul><h2>Creating a Scheduled Job</h2><p>Navigate to <strong>System Definition > Scheduled Jobs</strong>. Key fields:</p><ul><li><strong>Run</strong> — Daily, Weekly, Monthly, Periodically, Once</li><li><strong>Time</strong> — UTC time for the job to run</li><li><strong>Script</strong> — the server-side JavaScript to execute</li><li><strong>Run as</strong> — which user context to run in (defaults to admin — be specific)</li></ul><h2>Basic scheduled job script</h2><pre><code>// Close stale incidents older than 30 days with no activity
+var gr = new GlideRecord('incident');
+gr.addEncodedQuery('active=true^state=2^sys_updated_on<javascript:gs.daysAgo(30)');
+gr.query();
+while (gr.next()) {
+    gr.state = 7; // Closed
+    gr.close_notes = 'Auto-closed: no activity for 30 days';
+    gr.setWorkflow(false); // Don't fire Business Rules
+    gr.update();
+}
+gs.log('Auto-closed ' + gr.getRowCount() + ' stale incidents');</code></pre><h2>setWorkflow(false) and autoSysFields(false)</h2><p>In scheduled jobs, always use <code>gr.setWorkflow(false)</code> unless you explicitly need Business Rules to fire. This prevents email notifications, cascading Business Rules, and performance overhead from each update in a batch job.</p><h2>Monitoring execution</h2><p>View execution history at <strong>System Scheduler > Scheduled Job Log</strong>. Each execution shows start time, end time, status, and any errors logged during the run.</p><h2>Performance considerations</h2><p>Scheduled jobs on large tables run during business hours impact performance for everyone. Schedule heavy jobs for off-peak hours (UTC 2:00–5:00 AM is usually safest). Add setLimit() even on scheduled jobs to prevent runaway queries.</p>
+    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <img src="../assets/horizontal-logo.svg" alt="NowSpectrum" class="footer-logo">
+        <p class="footer-tagline">ServiceNow knowledge, talent, and consulting — built by professionals, for professionals.</p>
+        <div class="footer-socials">
+          <a href="https://x.com/nowspectrumhq" target="_blank" class="social-link" aria-label="X">𝕏</a>
+          <a href="https://linkedin.com/company/nowspectrum" target="_blank" class="social-link" aria-label="LinkedIn">in</a>
+          <a href="https://youtube.com/@nowspectrum" target="_blank" class="social-link" aria-label="YouTube">▶</a>
+          <a href="https://instagram.com/nowspectrumhq" target="_blank" class="social-link" aria-label="Instagram">ig</a>
+          <a href="https://tiktok.com/@nowspectrumhq" target="_blank" class="social-link" aria-label="TikTok">tt</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Products</h4>
+        <ul class="footer-links">
+          <li><a href="https://store.nowspectrum.com/l/pro-tips" target="_blank">Pro Tips &amp; Tricks</a></li>
+          <li><a href="https://store.nowspectrum.com/l/integration-guide" target="_blank">Integrations Guide</a></li>
+          <li><a href="https://store.nowspectrum.com/l/nowassist-guide" target="_blank">Now Assist Guide</a></li>
+          <li><a href="https://store.nowspectrum.com/l/interview-prep-kit" target="_blank">Interview Prep Kit</a></li>
+          <li><a href="https://store.nowspectrum.com" target="_blank">All Products →</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Resources</h4>
+        <ul class="footer-links">
+          <li><a href="../blog.html">Blog</a></li>
+          <li><a href="https://nowspectrum.beehiiv.com/subscribe" target="_blank">Newsletter</a></li>
+          <li><a href="../services.html">Services</a></li>
+          <li><a href="../about.html">About</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Connect</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:nowspectrumhq@gmail.com">Email Us</a></li>
+          <li><a href="../contact.html">Contact Form</a></li>
+          <li><a href="https://nowspectrum.beehiiv.com/subscribe" target="_blank">Newsletter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 NowSpectrum. All rights reserved.</p>
+      <p>Built for ServiceNow professionals.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

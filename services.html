@@ -3,22 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="NowSpectrum ServiceNow consulting services — instance audits, REST integrations, Flow Designer builds, and development support for businesses using ServiceNow.">
-  <meta name="keywords" content="ServiceNow consulting, ServiceNow developer, REST integration, Flow Designer, instance audit, ServiceNow freelance">
-  <title>Services — NowSpectrum</title>
+  <meta name="description" content="ServiceNow development, administration, maintenance, support, and consulting services from NowSpectrum. Get a free quote today.">
+  <title>ServiceNow Services | NowSpectrum</title>
   <link rel="icon" type="image/png" href="assets/nowspectrum-white-icon.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .engagement-strip { padding: 64px 0; background: var(--dark); }
+    .engagement-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .eng-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-lg); padding: 32px; transition: all 0.25s; }
+    .eng-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(22,163,74,0.4); transform: translateY(-3px); }
+    .eng-card.featured { border-color: rgba(22,163,74,0.5); background: rgba(22,163,74,0.06); }
+    .eng-icon { font-size: 32px; margin-bottom: 14px; }
+    .eng-title { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .eng-desc { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7; margin-bottom: 20px; }
+    .eng-tag { display: inline-block; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 100px; margin-bottom: 16px; }
+    .eng-tag-green { background: rgba(22,163,74,0.15); color: var(--green-light); }
+    .eng-tag-blue { background: rgba(26,86,160,0.2); color: #60A5FA; }
+    .eng-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+    .eng-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.7); }
+    .eng-item::before { content: '✓'; color: var(--green-light); font-weight: 700; flex-shrink: 0; }
+    .services-full { padding: 80px 0; }
+    .services-full-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .svc-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; display: flex; flex-direction: column; gap: 14px; box-shadow: var(--shadow); transition: all 0.25s; }
+    .svc-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--green); }
+    .svc-icon { font-size: 32px; }
+    .svc-title { font-size: 18px; font-weight: 700; color: var(--text); }
+    .svc-desc { font-size: 14px; color: var(--text-3); line-height: 1.7; flex: 1; }
+    .svc-includes { padding-left: 16px; display: flex; flex-direction: column; gap: 4px; }
+    .svc-includes li { font-size: 13px; color: var(--text-3); line-height: 1.7; }
+    .process-section { padding: 80px 0; background: var(--bg-2); }
+    .process-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; position: relative; }
+    .process-grid::before { content: ''; position: absolute; top: 22px; left: 10%; right: 10%; height: 2px; background: linear-gradient(90deg,var(--green),var(--blue)); opacity: 0.25; }
+    .proc-step { text-align: center; padding: 24px 12px; position: relative; z-index: 1; }
+    .proc-num { width: 44px; height: 44px; border-radius: 50%; background: var(--green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; margin: 0 auto 14px; box-shadow: 0 4px 14px rgba(22,163,74,0.3); }
+    .proc-step h4 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .proc-step p { font-size: 13px; color: var(--text-3); line-height: 1.6; }
+    .cta-section { padding: 80px 0; background: var(--dark); text-align: center; position: relative; overflow: hidden; }
+    .cta-section .glow { position: absolute; width: 500px; height: 300px; background: var(--blue); border-radius: 50%; filter: blur(80px); opacity: 0.1; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .cta-section .container { position: relative; z-index: 1; }
+    @media(max-width:900px) { .engagement-grid,.services-full-grid { grid-template-columns:1fr 1fr; } .process-grid { grid-template-columns:1fr 1fr; } .process-grid::before { display:none; } }
+    @media(max-width:600px) { .engagement-grid,.services-full-grid,.process-grid { grid-template-columns:1fr; } }
+  </style>
 </head>
 <body>
 
 <nav class="nav" id="nav">
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <img src="assets/horizontal-logo.svg" alt="NowSpectrum" class="logo-img">
-    </a>
+    <a href="index.html" class="nav-logo"><img src="assets/horizontal-logo.svg" alt="NowSpectrum" class="logo-img"></a>
     <ul class="nav-links">
       <li><a href="index.html" class="nav-link">Home</a></li>
       <li><a href="products.html" class="nav-link">Products</a></li>
@@ -28,10 +62,8 @@
       <li><a href="blog.html" class="nav-link">Blog</a></li>
       <li><a href="about.html" class="nav-link">About</a></li>
     </ul>
-    <a href="hire-a-consultant.html" class="btn btn-primary nav-cta">Hire a Consultant</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
+    <a href="get-a-quote.html" class="btn btn-primary nav-cta">Get a Quote</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
   </div>
   <div class="nav-mobile" id="navMobile">
     <a href="index.html" class="nav-link">Home</a>
@@ -41,193 +73,191 @@
     <a href="find-a-job.html" class="nav-link">Find a Job</a>
     <a href="blog.html" class="nav-link">Blog</a>
     <a href="about.html" class="nav-link">About</a>
-    <a href="hire-a-consultant.html" class="btn btn-primary">Hire a Consultant</a>
+    <a href="get-a-quote.html" class="btn btn-primary">Get a Quote</a>
   </div>
 </nav>
+
+<!-- HERO -->
 <div class="page-hero">
   <div class="container">
     <span class="section-tag light">Services</span>
-    <h1 class="page-hero-title">ServiceNow Development<br>& Consulting</h1>
-    <p class="page-hero-sub">Need hands-on help with your ServiceNow instance? From quick audits to full integration builds — here is what we offer.</p>
+    <h1 class="page-hero-title">ServiceNow Expertise,<br>On Demand</h1>
+    <p class="page-hero-sub">Development, administration, consulting, and ongoing support — all delivered by certified ServiceNow professionals.</p>
   </div>
 </div>
 
-<!-- SERVICES GRID -->
-<section class="section">
+<!-- ENGAGEMENT MODELS -->
+<div class="engagement-strip">
   <div class="container">
-    <div class="section-header">
-      <span class="section-tag">What We Offer</span>
-      <h2 class="section-title">Custom ServiceNow Solutions<br>That Don't Break on Upgrade</h2>
-      <p class="section-subtitle">All work follows ServiceNow best practices — scoped apps, proper Update Sets, documented code. No technical debt.</p>
+    <div class="section-header" style="margin-bottom:40px;">
+      <span class="section-tag light">How to Engage</span>
+      <h2 class="section-title light">Three Ways to Work With Us</h2>
+      <p class="section-subtitle" style="color:rgba(255,255,255,0.5);">Pick the model that fits your needs — no long-term commitment required to get started.</p>
     </div>
-
-    <div class="services-grid">
-
-      <div class="service-card featured">
-        <div class="service-icon">🔍</div>
-        <h3 class="service-title">Instance Health Audit</h3>
-        <p class="service-desc">A thorough review of your ServiceNow instance. We identify technical debt, ACL gaps, performance issues, anti-patterns, and prioritise what needs fixing first. Delivered as a written report with a clear action plan.</p>
-        <ul class="service-includes">
-          <li>Business Rule and Script Include review</li>
-          <li>ACL and security configuration check</li>
-          <li>Performance anti-pattern identification</li>
-          <li>Update Set and scoping assessment</li>
-          <li>Written report with priority action list</li>
-        </ul>
-        <div class="service-price">$300 – $600 per audit · Delivered in 5–7 days</div>
-        <a href="mailto:nowspectrumhq@gmail.com?subject=Instance Health Audit Enquiry" class="btn btn-primary">Get in Touch</a>
+    <div class="engagement-grid">
+      <div class="eng-card">
+        <div class="eng-icon">⏱️</div>
+        <span class="eng-tag eng-tag-blue">Low commitment</span>
+        <h3 class="eng-title">1-Hour Consultation</h3>
+        <p class="eng-desc">Book a focused session with a ServiceNow expert. Bring a specific problem, architecture question, or code review — we work through it together live.</p>
+        <div class="eng-list">
+          <div class="eng-item">Architecture and design advice</div>
+          <div class="eng-item">Code and script review</div>
+          <div class="eng-item">Integration planning</div>
+          <div class="eng-item">Platform best practices Q&amp;A</div>
+        </div>
+        <a href="get-a-quote.html" class="btn btn-ghost" style="width:100%;">Book a Session →</a>
       </div>
-
-      <div class="service-card">
-        <div class="service-icon">⚡</div>
-        <h3 class="service-title">REST Integration Build</h3>
-        <p class="service-desc">End-to-end REST integration between ServiceNow and external systems. Includes authentication setup (OAuth 2.0, Basic Auth, API Key), error handling, retry logic, and full documentation.</p>
-        <ul class="service-includes">
-          <li>Inbound and outbound REST integrations</li>
-          <li>OAuth 2.0 / mTLS / API Key authentication</li>
-          <li>Connection & Credential Alias setup</li>
-          <li>Error handling and logging</li>
-          <li>Full technical documentation</li>
-        </ul>
-        <div class="service-price">$500 – $1,500 per integration · Timeline varies</div>
-        <a href="mailto:nowspectrumhq@gmail.com?subject=REST Integration Enquiry" class="btn btn-outline">Get in Touch</a>
+      <div class="eng-card featured">
+        <div class="eng-icon">🚀</div>
+        <span class="eng-tag eng-tag-green">Most popular</span>
+        <h3 class="eng-title">One-Off Project</h3>
+        <p class="eng-desc">Fixed scope, fixed deliverable. You tell us what needs building — we scope it, build it, test it, and hand it over with documentation.</p>
+        <div class="eng-list">
+          <div class="eng-item">Custom app or integration build</div>
+          <div class="eng-item">Flow Designer automation</div>
+          <div class="eng-item">Instance audit and cleanup</div>
+          <div class="eng-item">Migration or implementation</div>
+        </div>
+        <a href="get-a-quote.html" class="btn btn-primary" style="width:100%;">Get a Quote →</a>
       </div>
-
-      <div class="service-card">
-        <div class="service-icon">🔄</div>
-        <h3 class="service-title">Flow Designer Automation</h3>
-        <p class="service-desc">Build or migrate automation in Flow Designer. From simple approval flows to complex multi-step ITSM automations with IntegrationHub spokes. Includes error handling, testing, and documentation.</p>
-        <ul class="service-includes">
-          <li>New Flow Designer builds from spec</li>
-          <li>Legacy Workflow to Flow Designer migration</li>
-          <li>IntegrationHub spoke configuration</li>
-          <li>Subflow and reusable action design</li>
-          <li>Execution testing and documentation</li>
-        </ul>
-        <div class="service-price">$400 – $1,200 per project · Timeline varies</div>
-        <a href="mailto:nowspectrumhq@gmail.com?subject=Flow Designer Automation Enquiry" class="btn btn-outline">Get in Touch</a>
+      <div class="eng-card">
+        <div class="eng-icon">📅</div>
+        <span class="eng-tag eng-tag-blue">Recurring revenue</span>
+        <h3 class="eng-title">Monthly Retainer</h3>
+        <p class="eng-desc">Guaranteed hours every month, priority response, and a dedicated point of contact. Ideal for companies that need ongoing ServiceNow support without hiring full-time.</p>
+        <div class="eng-list">
+          <div class="eng-item">Guaranteed monthly hours</div>
+          <div class="eng-item">Priority response SLA</div>
+          <div class="eng-item">Proactive health monitoring</div>
+          <div class="eng-item">Monthly progress reporting</div>
+        </div>
+        <a href="get-a-quote.html" class="btn btn-ghost" style="width:100%;">Discuss Retainer →</a>
       </div>
-
-      <div class="service-card">
-        <div class="service-icon">🛠️</div>
-        <h3 class="service-title">Custom Development</h3>
-        <p class="service-desc">Scripted REST APIs, Script Includes, Business Rules, Service Portal widgets, CMDB customisations, and more. Built in a scoped application, fully documented, and delivered with Update Sets ready to promote.</p>
-        <ul class="service-includes">
-          <li>Scripted REST API endpoints</li>
-          <li>Script Include libraries</li>
-          <li>Service Portal widget development</li>
-          <li>CMDB and Discovery customisation</li>
-          <li>Scoped app development</li>
-        </ul>
-        <div class="service-price">$500 – $2,000 per project · Timeline varies</div>
-        <a href="mailto:nowspectrumhq@gmail.com?subject=Custom Development Enquiry" class="btn btn-outline">Get in Touch</a>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon">📅</div>
-        <h3 class="service-title">Monthly Retainer</h3>
-        <p class="service-desc">Your on-call ServiceNow developer for a fixed number of hours each month. Ideal for small and mid-size companies using ServiceNow without a full-time developer on staff.</p>
-        <ul class="service-includes">
-          <li>Dedicated hours each month</li>
-          <li>Priority response on issues</li>
-          <li>Ongoing development and fixes</li>
-          <li>Monthly progress report</li>
-          <li>No per-project billing overhead</li>
-        </ul>
-        <div class="service-price">$400 – $800/month · Minimum 3 months</div>
-        <a href="mailto:nowspectrumhq@gmail.com?subject=Monthly Retainer Enquiry" class="btn btn-outline">Get in Touch</a>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon">💬</div>
-        <h3 class="service-title">One-Hour Consultation</h3>
-        <p class="service-desc">A focused 60-minute session to review a specific problem, design an approach, or get a second opinion on your ServiceNow architecture. No commitment — just expert input when you need it.</p>
-        <ul class="service-includes">
-          <li>60-minute video call</li>
-          <li>Architecture and design review</li>
-          <li>Problem diagnosis and recommendations</li>
-          <li>Written summary after the call</li>
-          <li>No follow-up commitment required</li>
-        </ul>
-        <div class="service-price">$75 – $150 per session</div>
-        <a href="mailto:nowspectrumhq@gmail.com?subject=Consultation Enquiry" class="btn btn-outline">Get in Touch</a>
-      </div>
-
     </div>
   </div>
-</section>
+</div>
+
+<!-- 6 SERVICES -->
+<div class="services-full">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">What We Do</span>
+      <h2 class="section-title">All ServiceNow Service Lines</h2>
+      <p class="section-subtitle">Every service area covered by certified professionals with real production experience.</p>
+    </div>
+    <div class="services-full-grid">
+      <div class="svc-card">
+        <div class="svc-icon">💻</div>
+        <h3 class="svc-title">ServiceNow Development</h3>
+        <p class="svc-desc">Custom application development, scripting, and automation built to your exact requirements. From simple Business Rules to full scoped applications.</p>
+        <ul class="svc-includes">
+          <li>Custom app and table design</li>
+          <li>Business Rules, Script Includes, Client Scripts</li>
+          <li>Flow Designer and Workflow automation</li>
+          <li>Service Catalog design and build</li>
+          <li>Service Portal and widget development</li>
+        </ul>
+        <a href="get-a-quote.html" class="btn btn-outline" style="margin-top:auto;">Get a Quote</a>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">⚙️</div>
+        <h3 class="svc-title">ServiceNow Administration</h3>
+        <p class="svc-desc">Full platform administration — from initial configuration to ongoing management. Ideal for companies without dedicated in-house ServiceNow admin resource.</p>
+        <ul class="svc-includes">
+          <li>User, group, and role management</li>
+          <li>Form and list configuration</li>
+          <li>Update Set management</li>
+          <li>Service Catalog administration</li>
+          <li>Platform upgrades and patching</li>
+        </ul>
+        <a href="get-a-quote.html" class="btn btn-outline" style="margin-top:auto;">Get a Quote</a>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">🔧</div>
+        <h3 class="svc-title">ServiceNow Maintenance</h3>
+        <p class="svc-desc">Proactive platform maintenance to keep your instance healthy, performant, and upgrade-ready. Catch problems before they become incidents.</p>
+        <ul class="svc-includes">
+          <li>Regular Instance Scan health checks</li>
+          <li>Performance monitoring and tuning</li>
+          <li>Technical debt identification</li>
+          <li>Scheduled job monitoring</li>
+          <li>Upgrade readiness assessment</li>
+        </ul>
+        <a href="get-a-quote.html" class="btn btn-outline" style="margin-top:auto;">Get a Quote</a>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">🛟</div>
+        <h3 class="svc-title">ServiceNow Support</h3>
+        <p class="svc-desc">Reactive support when things break. Fast response, root cause analysis, and permanent fixes — not just workarounds.</p>
+        <ul class="svc-includes">
+          <li>Break-fix and incident response</li>
+          <li>Integration failure diagnosis</li>
+          <li>Business Rule and script debugging</li>
+          <li>ACL and access issue resolution</li>
+          <li>Post-upgrade issue remediation</li>
+        </ul>
+        <a href="get-a-quote.html" class="btn btn-outline" style="margin-top:auto;">Get a Quote</a>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">🏗️</div>
+        <h3 class="svc-title">ServiceNow Consulting</h3>
+        <p class="svc-desc">Strategic guidance for implementations, migrations, and platform evolution. We help you make the right architectural decisions before they become expensive mistakes.</p>
+        <ul class="svc-includes">
+          <li>Implementation planning and architecture</li>
+          <li>Platform roadmap development</li>
+          <li>Best practice review and advisory</li>
+          <li>Vendor and tooling evaluation</li>
+          <li>Team capability assessment</li>
+        </ul>
+        <a href="get-a-quote.html" class="btn btn-outline" style="margin-top:auto;">Get a Quote</a>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">🎯</div>
+        <h3 class="svc-title">Custom Development</h3>
+        <p class="svc-desc">Bespoke solutions for complex requirements — third-party integrations, custom REST APIs, advanced automations, and anything the standard platform doesn't cover out of the box.</p>
+        <ul class="svc-includes">
+          <li>REST / SOAP API integration build</li>
+          <li>OAuth 2.0 and MID Server setup</li>
+          <li>Scripted REST API development</li>
+          <li>IntegrationHub spoke development</li>
+          <li>Complex Flow Designer automation</li>
+        </ul>
+        <a href="get-a-quote.html" class="btn btn-outline" style="margin-top:auto;">Get a Quote</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- HOW IT WORKS -->
-<section class="section section-dark">
+<div class="process-section">
   <div class="container">
     <div class="section-header">
-      <span class="section-tag light">How It Works</span>
-      <h2 class="section-title light">Simple Process,<br>No Surprises</h2>
+      <span class="section-tag">Our Process</span>
+      <h2 class="section-title">How Every Engagement Works</h2>
     </div>
-    <div class="process-steps">
-      <div class="process-step">
-        <div class="step-num">1</div>
-        <div class="step-title">Get in Touch</div>
-        <div class="step-desc">Email us with a brief description of what you need. We respond within 24 hours.</div>
-      </div>
-      <div class="process-step">
-        <div class="step-num">2</div>
-        <div class="step-title">Scoping Call</div>
-        <div class="step-desc">A short call to understand your requirements, instance setup, and timeline. Free, no commitment.</div>
-      </div>
-      <div class="process-step">
-        <div class="step-num">3</div>
-        <div class="step-title">Proposal & Quote</div>
-        <div class="step-desc">We send a clear written proposal with scope, deliverables, timeline, and fixed price.</div>
-      </div>
-      <div class="process-step">
-        <div class="step-num">4</div>
-        <div class="step-title">Build & Deliver</div>
-        <div class="step-desc">We build in a dev environment, test thoroughly, and deliver with full documentation and Update Sets.</div>
-      </div>
+    <div class="process-grid">
+      <div class="proc-step"><div class="proc-num">1</div><h4>Submit a Quote Request</h4><p>Tell us what you need via the quote form — as much or as little detail as you have right now</p></div>
+      <div class="proc-step"><div class="proc-num">2</div><h4>We Scope It</h4><p>We review your requirements and come back within 24 hours with a clear proposal and timeline</p></div>
+      <div class="proc-step"><div class="proc-num">3</div><h4>We Build It</h4><p>Work begins on your agreed timeline — with regular updates and full transparency throughout</p></div>
+      <div class="proc-step"><div class="proc-num">4</div><h4>Handover &amp; Support</h4><p>We deliver with documentation and provide a support window to make sure everything runs smoothly</p></div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- WHY US -->
-<section class="section">
+<!-- FINAL CTA -->
+<div class="cta-section">
+  <div class="glow"></div>
   <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Why Work With Us</span>
-      <h2 class="section-title">What Makes NowSpectrum Different</h2>
+    <span class="section-tag light">Ready to start?</span>
+    <h2 class="section-title light" style="margin-top:12px;">Tell us what you need.</h2>
+    <p style="font-size:17px;color:rgba(255,255,255,0.55);max-width:480px;margin:14px auto 32px;line-height:1.7;">No commitment, no pressure. Just tell us about your project and we will come back with a clear proposal within 24 hours.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="get-a-quote.html" class="btn btn-primary btn-lg">Get a Free Quote →</a>
+      <a href="mailto:nowspectrumhq@gmail.com" class="btn btn-ghost btn-lg">Email Us Directly</a>
     </div>
-    <div class="features-grid" style="color: var(--text);">
-      <div class="feature">
-        <div class="feature-icon" style="background: var(--green-pale); color: var(--green);">✓</div>
-        <h3 class="feature-title" style="color: var(--text);">Best practices, not workarounds</h3>
-        <p class="feature-desc" style="color: var(--text-3);">Every build uses scoped applications, Connection & Credential Aliases, and proper Update Set discipline. Nothing hardcoded. Nothing that breaks on upgrade.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon" style="background: var(--green-pale); color: var(--green);">✓</div>
-        <h3 class="feature-title" style="color: var(--text);">Real experience, not theory</h3>
-        <p class="feature-desc" style="color: var(--text-3);">Built on real production ServiceNow experience across ITSM, HRSD, REST integrations, and platform development. The patterns in our guides come from the same work we do for clients.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon" style="background: var(--green-pale); color: var(--green);">✓</div>
-        <h3 class="feature-title" style="color: var(--text);">Full documentation delivered</h3>
-        <p class="feature-desc" style="color: var(--text-3);">Every project includes written technical documentation. When we are done, your team understands what was built and why — not just a black-box solution.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon" style="background: var(--green-pale); color: var(--green);">✓</div>
-        <h3 class="feature-title" style="color: var(--text);">Fixed pricing, no billing surprises</h3>
-        <p class="feature-desc" style="color: var(--text-3);">We quote a fixed price before starting. No hourly billing overruns. No surprise invoices. The price in the proposal is the price you pay.</p>
-      </div>
-    </div>
-
-    <div class="contact-cta-box">
-      <h2>Ready to get started?</h2>
-      <p>Email us with a brief description of what you need. We will respond within 24 hours.</p>
-      <a href="mailto:nowspectrumhq@gmail.com?subject=ServiceNow Services Enquiry" class="btn btn-primary btn-lg">Email Us →</a>
-    </div>
-
   </div>
-</section>
-
+</div>
 
 <footer class="footer">
   <div class="container">
@@ -236,20 +266,27 @@
         <img src="assets/horizontal-logo.svg" alt="NowSpectrum" class="footer-logo">
         <p class="footer-tagline">ServiceNow knowledge, talent, and consulting — built by professionals, for professionals.</p>
         <div class="footer-socials">
-          <a href="https://x.com/nowspectrumhq" target="_blank" class="social-link" aria-label="X">𝕏</a>
-          <a href="https://linkedin.com/company/nowspectrum" target="_blank" class="social-link" aria-label="LinkedIn">in</a>
-          <a href="https://youtube.com/@nowspectrum" target="_blank" class="social-link" aria-label="YouTube">▶</a>
-          <a href="https://instagram.com/nowspectrumhq" target="_blank" class="social-link" aria-label="Instagram">ig</a>
-          <a href="https://tiktok.com/@nowspectrumhq" target="_blank" class="social-link" aria-label="TikTok">tt</a>
+          <a href="https://x.com/nowspectrumhq" target="_blank" class="social-link">𝕏</a>
+          <a href="https://linkedin.com/company/nowspectrum" target="_blank" class="social-link">in</a>
+          <a href="https://youtube.com/@nowspectrum" target="_blank" class="social-link">▶</a>
+          <a href="https://instagram.com/nowspectrumhq" target="_blank" class="social-link">ig</a>
         </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Services</h4>
+        <ul class="footer-links">
+          <li><a href="services.html">All Services</a></li>
+          <li><a href="hire-a-consultant.html">Hire a Consultant</a></li>
+          <li><a href="find-a-job.html">Find a Job</a></li>
+          <li><a href="get-a-quote.html">Get a Quote</a></li>
+        </ul>
       </div>
       <div class="footer-col">
         <h4 class="footer-heading">Products</h4>
         <ul class="footer-links">
-          <li><a href="https://store.nowspectrum.com/l/pro-tips" target="_blank">Pro Tips &amp; Tricks</a></li>
           <li><a href="https://store.nowspectrum.com/l/integration-guide" target="_blank">Integrations Guide</a></li>
-          <li><a href="https://store.nowspectrum.com/l/nowassist-guide" target="_blank">Now Assist Guide</a></li>
           <li><a href="https://store.nowspectrum.com/l/interview-prep-kit" target="_blank">Interview Prep Kit</a></li>
+          <li><a href="https://store.nowspectrum.com/l/pro-tips" target="_blank">Pro Tips &amp; Tricks</a></li>
           <li><a href="https://store.nowspectrum.com" target="_blank">All Products →</a></li>
         </ul>
       </div>
@@ -258,16 +295,8 @@
         <ul class="footer-links">
           <li><a href="blog.html">Blog</a></li>
           <li><a href="https://nowspectrum.beehiiv.com/subscribe" target="_blank">Newsletter</a></li>
-          <li><a href="services.html">Services</a></li>
           <li><a href="about.html">About</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4 class="footer-heading">Connect</h4>
-        <ul class="footer-links">
-          <li><a href="mailto:nowspectrumhq@gmail.com">Email Us</a></li>
-          <li><a href="contact.html">Contact Form</a></li>
-          <li><a href="https://nowspectrum.beehiiv.com/subscribe" target="_blank">Newsletter</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
     </div>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how to implement proper error handling in ServiceNow Flow Designer — Try steps, fault handlers, and retry logic for robust automation.">
+  <title>Flow Designer Error Handling: Try/Catch, Fault Handlers, and Retry Logic | NowSpectrum</title>
+  <link rel="icon" type="image/png" href="../assets/nowspectrum-white-icon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <img src="../assets/horizontal-logo.svg" alt="NowSpectrum" class="logo-img">
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html" class="nav-link">Home</a></li>
+      <li><a href="../products.html" class="nav-link">Products</a></li>
+      <li><a href="../services.html" class="nav-link">Services</a></li>
+      <li><a href="../hire-a-consultant.html" class="nav-link">Hire a Consultant</a></li>
+      <li><a href="../find-a-job.html" class="nav-link">Find a Job</a></li>
+      <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+      <li><a href="../about.html" class="nav-link">About</a></li>
+    </ul>
+    <a href="../get-a-quote.html" class="btn btn-primary nav-cta">Get a Quote</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="../index.html" class="nav-link">Home</a>
+    <a href="../products.html" class="nav-link">Products</a>
+    <a href="../services.html" class="nav-link">Services</a>
+    <a href="../hire-a-consultant.html" class="nav-link">Hire a Consultant</a>
+    <a href="../find-a-job.html" class="nav-link">Find a Job</a>
+    <a href="../blog.html" class="nav-link active">Blog</a>
+    <a href="../about.html" class="nav-link">About</a>
+    <a href="../get-a-quote.html" class="btn btn-primary">Get a Quote</a>
+  </div>
+</nav>
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Flow Designer</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">Flow Designer Error Handling: Try/Catch, Fault Handlers, and Retry Logic</h1>
+      <p class="post-intro">A Flow without error handling will silently fail the moment something unexpected happens. REST calls timeout. Records are not found. Rate limits are hit. Here is how to build flows that handle errors gracefully.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>The Try step</h2>
+<p>The Try step wraps a section of your flow. If any step inside the Try throws an error, execution jumps to the Catch section instead of stopping the flow entirely.</p>
+<p>Structure:</p>
+<pre><code>Try
+  → Step: Call External API
+  → Step: Update Record with API response
+Catch (Error)
+  → Step: Log error to table
+  → Step: Send email to admin
+  → Step: Update Record with "API call failed" status</code></pre>
+<h2>What triggers a Catch?</h2>
+<ul>
+<li>REST calls that return HTTP 4xx or 5xx status codes (depending on configuration)</li>
+<li>Script steps that throw exceptions</li>
+<li>Look Up steps that return no records and are configured to throw on no result</li>
+<li>Action steps that fail (spoke errors)</li>
+</ul>
+<h2>Error output variables</h2>
+<p>Inside the Catch block, error data pills are available: error.message, error.stackTrace, error.fault_message. Use these to log meaningful diagnostic information.</p>
+<h2>Retry logic</h2>
+<p>For transient failures (network blips, rate limits), add retry logic in the Catch block:</p>
+<pre><code>Catch (Error)
+  → Condition: Retry count < 3
+    → True: Wait 30 seconds → Run Subflow (same operation)
+    → False: Log permanent failure → Notify admin</code></pre>
+<h2>The Flow error log</h2>
+<p>Every time a flow fails, an error record is created. View at <strong>Flow Designer > Flow Error Records</strong>. Each error shows the execution context, the step that failed, and the full stack trace. This is your first stop when investigating a failing flow.</p>
+<h2>Fault handler on the flow itself</h2>
+<p>You can add a global fault handler at the flow level (not inside a Try step). This catches any unhandled error from anywhere in the flow. Use it as a safety net to ensure critical flows always notify someone on failure.</p>
+<h2>Testing error paths</h2>
+<p>Explicitly test your error handling by triggering failure conditions in your test environment. Pass an invalid record sys_id, point at a downed endpoint, or throw an explicit error in a Script step to verify your Catch blocks work as expected.</p>    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <img src="../assets/horizontal-logo.svg" alt="NowSpectrum" class="footer-logo">
+        <p class="footer-tagline">ServiceNow knowledge, talent, and consulting — built by professionals, for professionals.</p>
+        <div class="footer-socials">
+          <a href="https://x.com/nowspectrumhq" target="_blank" class="social-link" aria-label="X">𝕏</a>
+          <a href="https://linkedin.com/company/nowspectrum" target="_blank" class="social-link" aria-label="LinkedIn">in</a>
+          <a href="https://youtube.com/@nowspectrum" target="_blank" class="social-link" aria-label="YouTube">▶</a>
+          <a href="https://instagram.com/nowspectrumhq" target="_blank" class="social-link" aria-label="Instagram">ig</a>
+          <a href="https://tiktok.com/@nowspectrumhq" target="_blank" class="social-link" aria-label="TikTok">tt</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Products</h4>
+        <ul class="footer-links">
+          <li><a href="https://store.nowspectrum.com/l/pro-tips" target="_blank">Pro Tips &amp; Tricks</a></li>
+          <li><a href="https://store.nowspectrum.com/l/integration-guide" target="_blank">Integrations Guide</a></li>
+          <li><a href="https://store.nowspectrum.com/l/nowassist-guide" target="_blank">Now Assist Guide</a></li>
+          <li><a href="https://store.nowspectrum.com/l/interview-prep-kit" target="_blank">Interview Prep Kit</a></li>
+          <li><a href="https://store.nowspectrum.com" target="_blank">All Products →</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Resources</h4>
+        <ul class="footer-links">
+          <li><a href="../blog.html">Blog</a></li>
+          <li><a href="https://nowspectrum.beehiiv.com/subscribe" target="_blank">Newsletter</a></li>
+          <li><a href="../services.html">Services</a></li>
+          <li><a href="../about.html">About</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Connect</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:nowspectrumhq@gmail.com">Email Us</a></li>
+          <li><a href="../contact.html">Contact Form</a></li>
+          <li><a href="https://nowspectrum.beehiiv.com/subscribe" target="_blank">Newsletter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 NowSpectrum. All rights reserved.</p>
+      <p>Built for ServiceNow professionals.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

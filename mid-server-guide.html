@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A clear explanation of ServiceNow MID Server — what it does, how it works, and when your integration actually needs one.">
+  <title>MID Server Architecture: What It Is and When You Actually Need It | NowSpectrum</title>
+  <link rel="icon" type="image/png" href="../assets/nowspectrum-white-icon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <img src="../assets/horizontal-logo.svg" alt="NowSpectrum" class="logo-img">
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html" class="nav-link">Home</a></li>
+      <li><a href="../products.html" class="nav-link">Products</a></li>
+      <li><a href="../services.html" class="nav-link">Services</a></li>
+      <li><a href="../hire-a-consultant.html" class="nav-link">Hire a Consultant</a></li>
+      <li><a href="../find-a-job.html" class="nav-link">Find a Job</a></li>
+      <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+      <li><a href="../about.html" class="nav-link">About</a></li>
+    </ul>
+    <a href="../get-a-quote.html" class="btn btn-primary nav-cta">Get a Quote</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="../index.html" class="nav-link">Home</a>
+    <a href="../products.html" class="nav-link">Products</a>
+    <a href="../services.html" class="nav-link">Services</a>
+    <a href="../hire-a-consultant.html" class="nav-link">Hire a Consultant</a>
+    <a href="../find-a-job.html" class="nav-link">Find a Job</a>
+    <a href="../blog.html" class="nav-link active">Blog</a>
+    <a href="../about.html" class="nav-link">About</a>
+    <a href="../get-a-quote.html" class="btn btn-primary">Get a Quote</a>
+  </div>
+</nav>
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Integrations</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">MID Server Architecture: What It Is and When You Actually Need It</h1>
+      <p class="post-intro">MID Server is a Java application that runs inside your corporate network and acts as a gateway between ServiceNow cloud and systems that are not reachable from the internet. Here is what it actually does and when you need one.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>The problem MID Server solves</h2>
+<p>ServiceNow is cloud-hosted. Your on-premises systems (internal databases, file servers, SNMP-managed network devices, internal REST APIs behind a firewall) are not reachable from the internet. MID Server sits inside your network and bridges the gap.</p>
+<h2>How MID Server works</h2>
+<p>MID Server initiates an outbound connection to ServiceNow on startup. ServiceNow sends work items (called ECC Queue messages) down that connection. MID Server executes the work (run a probe, make an API call, execute a discovery scan), then sends results back up through the same connection.</p>
+<p>This means: no inbound firewall ports needed on your side. MID Server only makes outbound connections.</p>
+<h2>When you need a MID Server</h2>
+<ul>
+<li><strong>Discovery</strong> — scanning your network to populate the CMDB. MID Server needs line-of-sight to the devices being scanned.</li>
+<li><strong>Integrations with internal APIs</strong> — calling a REST API that lives behind your corporate firewall</li>
+<li><strong>JDBC integrations</strong> — connecting to on-premises databases (SQL Server, Oracle, etc.)</li>
+<li><strong>Orchestration against internal systems</strong> — running scripts or PowerShell against internal servers</li>
+<li><strong>SNMP polling</strong> — monitoring network devices via SNMP</li>
+</ul>
+<h2>When you do NOT need a MID Server</h2>
+<ul>
+<li>Calling public REST APIs accessible from the internet</li>
+<li>ServiceNow-to-ServiceNow integrations (same platform)</li>
+<li>Webhook receivers (inbound to ServiceNow)</li>
+<li>Any system accessible directly from ServiceNow's cloud IP ranges</li>
+</ul>
+<h2>MID Server capacity planning</h2>
+<p>One MID Server can typically handle moderate Discovery and integration load. For large enterprises: use MID Server clusters (multiple MID Servers in a pool) for redundancy and load distribution. Configure affinity so specific integrations always use specific MID Servers.</p>
+<h2>MID Server in Flow Designer</h2>
+<p>When adding a REST step in Flow Designer, you can specify which MID Server to route through. This is how you call internal APIs from a Flow without writing custom scripting.</p>    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <img src="../assets/horizontal-logo.svg" alt="NowSpectrum" class="footer-logo">
+        <p class="footer-tagline">ServiceNow knowledge, talent, and consulting — built by professionals, for professionals.</p>
+        <div class="footer-socials">
+          <a href="https://x.com/nowspectrumhq" target="_blank" class="social-link" aria-label="X">𝕏</a>
+          <a href="https://linkedin.com/company/nowspectrum" target="_blank" class="social-link" aria-label="LinkedIn">in</a>
+          <a href="https://youtube.com/@nowspectrum" target="_blank" class="social-link" aria-label="YouTube">▶</a>
+          <a href="https://instagram.com/nowspectrumhq" target="_blank" class="social-link" aria-label="Instagram">ig</a>
+          <a href="https://tiktok.com/@nowspectrumhq" target="_blank" class="social-link" aria-label="TikTok">tt</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Products</h4>
+        <ul class="footer-links">
+          <li><a href="https://store.nowspectrum.com/l/pro-tips" target="_blank">Pro Tips &amp; Tricks</a></li>
+          <li><a href="https://store.nowspectrum.com/l/integration-guide" target="_blank">Integrations Guide</a></li>
+          <li><a href="https://store.nowspectrum.com/l/nowassist-guide" target="_blank">Now Assist Guide</a></li>
+          <li><a href="https://store.nowspectrum.com/l/interview-prep-kit" target="_blank">Interview Prep Kit</a></li>
+          <li><a href="https://store.nowspectrum.com" target="_blank">All Products →</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Resources</h4>
+        <ul class="footer-links">
+          <li><a href="../blog.html">Blog</a></li>
+          <li><a href="https://nowspectrum.beehiiv.com/subscribe" target="_blank">Newsletter</a></li>
+          <li><a href="../services.html">Services</a></li>
+          <li><a href="../about.html">About</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Connect</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:nowspectrumhq@gmail.com">Email Us</a></li>
+          <li><a href="../contact.html">Contact Form</a></li>
+          <li><a href="https://nowspectrum.beehiiv.com/subscribe" target="_blank">Newsletter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 NowSpectrum. All rights reserved.</p>
+      <p>Built for ServiceNow professionals.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
