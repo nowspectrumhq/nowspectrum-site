@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Get a quote for ServiceNow development, administration, consulting, maintenance, or support services from NowSpectrum.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <title>Get a Quote | NowSpectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .quote-hero { padding: 120px 0 60px; background: var(--dark); text-align: center; position: relative; overflow: hidden; }
+    .quote-hero .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(26,86,160,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(26,86,160,0.07) 1px,transparent 1px); background-size: 60px 60px; }
+    .quote-hero .glow-1 { position: absolute; width: 400px; height: 400px; background: var(--blue); border-radius: 50%; filter: blur(80px); opacity: 0.12; top: -100px; right: -50px; }
+    .quote-hero .glow-2 { position: absolute; width: 300px; height: 300px; background: var(--green); border-radius: 50%; filter: blur(80px); opacity: 0.1; bottom: -50px; left: -50px; }
+    .quote-hero .container { position: relative; z-index: 1; }
+    .quote-section { padding: 72px 0; background: var(--bg-2); }
+    .quote-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; align-items: start; max-width: 1000px; margin: 0 auto; }
+    .quote-sidebar { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 88px; }
+    .sidebar-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow); }
+    .sidebar-icon { font-size: 24px; margin-bottom: 10px; }
+    .sidebar-card h4 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .sidebar-card p { font-size: 13px; color: var(--text-3); line-height: 1.6; }
+    .sidebar-divider { height: 1px; background: var(--border); margin: 4px 0; }
+    .response-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(22,163,74,0.08); border: 1px solid rgba(22,163,74,0.2); color: var(--green); padding: 8px 16px; border-radius: 100px; font-size: 13px; font-weight: 600; }
+    .form-container { background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 40px; box-shadow: var(--shadow-xl); }
+    .form-title { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .form-sub { font-size: 14px; color: var(--text-3); margin-bottom: 28px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-select { padding: 12px 16px; border: 1px solid var(--border-2); border-radius: var(--radius); font-family: var(--font-body); font-size: 15px; color: var(--text); background: var(--bg); transition: border-color 0.2s; width: 100%; }
+    .form-select:focus { outline: none; border-color: var(--green); }
+    .form-section-label { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin: 24px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .service-checkboxes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .service-check { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: all 0.2s; font-size: 14px; color: var(--text-2); font-weight: 500; }
+    .service-check:hover { border-color: var(--green); background: var(--green-pale); color: var(--green); }
+    .service-check input { accent-color: var(--green); width: 16px; height: 16px; cursor: pointer; }
+    .engagement-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .engagement-card { border: 2px solid var(--border); border-radius: var(--radius); padding: 16px; cursor: pointer; transition: all 0.2s; text-align: center; }
+    .engagement-card:hover { border-color: var(--green); }
+    .engagement-card input[type="radio"] { display: none; }
+    .engagement-card.selected { border-color: var(--green); background: var(--green-pale); }
+    .engagement-icon { font-size: 22px; margin-bottom: 6px; }
+    .engagement-label { font-size: 13px; font-weight: 700; color: var(--text); display: block; margin-bottom: 4px; }
+    .engagement-desc { font-size: 11px; color: var(--text-3); line-height: 1.4; }
+    @media(max-width:768px) { .quote-layout { grid-template-columns: 1fr; } .quote-sidebar { position: static; } .form-row,.service-checkboxes,.engagement-cards { grid-template-columns: 1fr; } .form-container { padding: 24px 18px; } }
+  </style>
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<div class="quote-hero">
+  <div class="hero-grid"></div>
+  <div class="glow-1"></div>
+  <div class="glow-2"></div>
+  <div class="container">
+    <div class="hero-badge"><span class="badge-dot"></span>No commitment required</div>
+    <h1 class="hero-title">Get a <span class="text-gradient">Free Quote</span></h1>
+    <p class="hero-subtitle">Tell us what you need and we will come back to you within 24 hours with a clear proposal.</p>
+  </div>
+</div>
+
+<div class="quote-section">
+  <div class="container">
+    <div class="quote-layout">
+
+      <!-- SIDEBAR -->
+      <div class="quote-sidebar">
+        <div class="response-badge"><span class="badge-dot"></span>We respond within 24 hours</div>
+        <div class="sidebar-card">
+          <div class="sidebar-icon">⚡</div>
+          <h4>Fast turnaround</h4>
+          <p>We review every enquiry personally and respond with a tailored proposal — not a generic price list.</p>
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-icon">🔒</div>
+          <h4>No commitment</h4>
+          <p>Getting a quote is completely free and carries no obligation. You only proceed if it makes sense for you.</p>
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-icon">🎯</div>
+          <h4>ServiceNow only</h4>
+          <p>We specialise exclusively in ServiceNow — every consultant and developer on our team lives the platform daily.</p>
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-icon">💬</div>
+          <h4>Prefer to talk first?</h4>
+          <p>Email us directly at <a href="mailto:nowspectrumhq@gmail.com" style="color:var(--green);font-weight:600;">nowspectrumhq@gmail.com</a></p>
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <div class="form-container">
+        <h2 class="form-title">Tell us about your project</h2>
+        <p class="form-sub">Fill in as much or as little as you know right now — we will work through the details together.</p>
+
+        <form id="quote-form">
+          <div class="form-section-label">Your Details</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Full Name *</label>
+              <input type="text" class="form-input" placeholder="John Smith" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Company Name</label>
+              <input type="text" class="form-input" placeholder="Acme Corp">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Work Email *</label>
+              <input type="email" class="form-input" placeholder="john@company.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" class="form-input" placeholder="+1 (555) 000-0000">
+            </div>
+          </div>
+
+          <div class="form-section-label">What do you need?</div>
+          <div class="service-checkboxes">
+            <label class="service-check"><input type="checkbox" value="Development"> 💻 Development</label>
+            <label class="service-check"><input type="checkbox" value="Administration"> ⚙️ Administration</label>
+            <label class="service-check"><input type="checkbox" value="Maintenance"> 🔧 Maintenance</label>
+            <label class="service-check"><input type="checkbox" value="Support"> 🛟 Support</label>
+            <label class="service-check"><input type="checkbox" value="Consulting"> 🏗️ Consulting</label>
+            <label class="service-check"><input type="checkbox" value="Custom Development"> 🎯 Custom Development</label>
+          </div>
+
+          <div class="form-section-label">Engagement Type</div>
+          <div class="engagement-cards" id="engagement-cards">
+            <label class="engagement-card" onclick="selectEngagement(this)">
+              <input type="radio" name="engagement" value="one-hour">
+              <div class="engagement-icon">⏱️</div>
+              <span class="engagement-label">1-Hour Consultation</span>
+              <span class="engagement-desc">Quick expert advice on a specific problem</span>
+            </label>
+            <label class="engagement-card" onclick="selectEngagement(this)">
+              <input type="radio" name="engagement" value="project">
+              <div class="engagement-icon">🚀</div>
+              <span class="engagement-label">One-Off Project</span>
+              <span class="engagement-desc">Fixed scope, defined deliverable</span>
+            </label>
+            <label class="engagement-card" onclick="selectEngagement(this)">
+              <input type="radio" name="engagement" value="retainer">
+              <div class="engagement-icon">📅</div>
+              <span class="engagement-label">Monthly Retainer</span>
+              <span class="engagement-desc">Ongoing support, guaranteed hours</span>
+            </label>
+          </div>
+
+          <div class="form-section-label">Project Details</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">ServiceNow Version / Release</label>
+              <input type="text" class="form-input" placeholder="e.g. Xanadu, Washington DC">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Timeline</label>
+              <select class="form-select">
+                <option value="">Select timeline...</option>
+                <option>ASAP</option>
+                <option>Within 2–4 weeks</option>
+                <option>Within 1–2 months</option>
+                <option>Flexible / Planning ahead</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Approximate Budget</label>
+              <select class="form-select">
+                <option value="">Prefer not to say</option>
+                <option>Under $1,000</option>
+                <option>$1,000–$5,000</option>
+                <option>$5,000–$15,000</option>
+                <option>$15,000–$50,000</option>
+                <option>$50,000+</option>
+                <option>Ongoing / Monthly retainer</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">How did you find us?</label>
+              <select class="form-select">
+                <option value="">Select...</option>
+                <option>Google Search</option>
+                <option>LinkedIn</option>
+                <option>Reddit</option>
+                <option>Newsletter</option>
+                <option>Blog / Article</option>
+                <option>Word of mouth</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Describe your project or challenge *</label>
+            <textarea class="form-textarea" style="min-height:160px;" placeholder="Tell us what you are trying to achieve, what is currently in place, any technical constraints, and what success looks like for this project..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg" style="width:100%;margin-top:8px;">Submit Quote Request →</button>
+          <p style="font-size:13px;color:var(--text-3);text-align:center;margin-top:12px;">We respond within 24 hours. No commitment required.</p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script>
+function selectEngagement(card) {
+  document.querySelectorAll('.engagement-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+}
+</script>
+
+<script src="components/header.js"></script>
+<script src="components/footer.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

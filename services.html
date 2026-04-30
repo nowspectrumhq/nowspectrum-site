@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ServiceNow development, administration, maintenance, support, and consulting services from NowSpectrum. Get a free quote today.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <title>ServiceNow Services | NowSpectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .engagement-strip { padding: 64px 0; background: var(--dark); }
+    .engagement-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .eng-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-lg); padding: 32px; transition: all 0.25s; }
+    .eng-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(22,163,74,0.4); transform: translateY(-3px); }
+    .eng-card.featured { border-color: rgba(22,163,74,0.5); background: rgba(22,163,74,0.06); }
+    .eng-icon { font-size: 32px; margin-bottom: 14px; }
+    .eng-title { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .eng-desc { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7; margin-bottom: 20px; }
+    .eng-tag { display: inline-block; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 100px; margin-bottom: 16px; }
+    .eng-tag-green { background: rgba(22,163,74,0.15); color: var(--green-light); }
+    .eng-tag-blue { background: rgba(26,86,160,0.2); color: #60A5FA; }
+    .eng-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+    .eng-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.7); }
+    .eng-item::before { content: '✓'; color: var(--green-light); font-weight: 700; flex-shrink: 0; }
+    .services-full { padding: 80px 0; }
+    .services-full-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .svc-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; display: flex; flex-direction: column; gap: 14px; box-shadow: var(--shadow); transition: all 0.25s; }
+    .svc-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--green); }
+    .svc-icon { font-size: 32px; }
+    .svc-title { font-size: 18px; font-weight: 700; color: var(--text); }
+    .svc-desc { font-size: 14px; color: var(--text-3); line-height: 1.7; flex: 1; }
+    .svc-includes { padding-left: 16px; display: flex; flex-direction: column; gap: 4px; }
+    .svc-includes li { font-size: 13px; color: var(--text-3); line-height: 1.7; }
+    .process-section { padding: 80px 0; background: var(--bg-2); }
+    .process-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; position: relative; }
+    .process-grid::before { content: ''; position: absolute; top: 22px; left: 10%; right: 10%; height: 2px; background: linear-gradient(90deg,var(--green),var(--blue)); opacity: 0.25; }
+    .proc-step { text-align: center; padding: 24px 12px; position: relative; z-index: 1; }
+    .proc-num { width: 44px; height: 44px; border-radius: 50%; background: var(--green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; margin: 0 auto 14px; box-shadow: 0 4px 14px rgba(22,163,74,0.3); }
+    .proc-step h4 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .proc-step p { font-size: 13px; color: var(--text-3); line-height: 1.6; }
+    .cta-section { padding: 80px 0; background: var(--dark); text-align: center; position: relative; overflow: hidden; }
+    .cta-section .glow { position: absolute; width: 500px; height: 300px; background: var(--blue); border-radius: 50%; filter: blur(80px); opacity: 0.1; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .cta-section .container { position: relative; z-index: 1; }
+    @media(max-width:900px) { .engagement-grid,.services-full-grid { grid-template-columns:1fr 1fr; } .process-grid { grid-template-columns:1fr 1fr; } .process-grid::before { display:none; } }
+    @media(max-width:600px) { .engagement-grid,.services-full-grid,.process-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="container">
+    <span class="section-tag light">Services</span>
+    <h1 class="page-hero-title">ServiceNow Expertise,<br>On Demand</h1>
+    <p class="page-hero-sub">Development, administration, consulting, and ongoing support — all delivered by certified ServiceNow professionals.</p>
+  </div>
+</div>
+
+<!-- ENGAGEMENT MODELS -->
+<div class="engagement-strip">
+  <div class="container">
+    <div class="section-header" style="margin-bottom:40px;">
+      <span class="section-tag light">How to Engage</span>
+      <h2 class="section-title light">Three Ways to Work With Us</h2>
+      <p class="section-subtitle" style="color:rgba(255,255,255,0.5);">Pick the model that fits your needs — no long-term commitment required to get started.</p>
+    </div>
+    <div class="engagement-grid">
+      <div class="eng-card">
+        <div class="eng-icon">⏱️</div>
+        <span class="eng-tag eng-tag-blue">Low commitment</span>
+        <h3 class="eng-title">1-Hour Consultation</h3>
+        <p class="eng-desc">Book a focused session with a ServiceNow expert. Bring a specific problem, architecture question, or code review — we work through it together live.</p>
+        <div class="eng-list">
+          <div class="eng-item">Architecture and design advice</div>
+          <div class="eng-item">Code and script review</div>
+          <div class="eng-item">Integration planning</div>
+          <div class="eng-item">Platform best practices Q&amp;A</div>
+        </div>
+        <a href="get-a-quote.html" class="btn btn-ghost" style="width:100%;">Book a Session →</a>
+      </div>
+      <div class="eng-card featured">
+        <div class="eng-icon">🚀</div>
+        <span class="eng-tag eng-tag-green">Most popular</span>
+        <h3 class="eng-title">One-Off Project</h3>
+        <p class="eng-desc">Fixed scope, fixed deliverable. You tell us what needs building — we scope it, build it, test it, and hand it over with documentation.</p>
+        <div class="eng-list">
+          <div class="eng-item">Custom app or integration build</div>
+          <div class="eng-item">Flow Designer automation</div>
+          <div class="eng-item">Instance audit and cleanup</div>
+          <div class="eng-item">Migration or implementation</div>
+        </div>
+        <a href="get-a-quote.html" class="btn btn-primary" style="width:100%;">Get a Quote →</a>
+      </div>
+      <div class="eng-card">
+        <div class="eng-icon">📅</div>
+        <span class="eng-tag eng-tag-blue">Recurring revenue</span>
+        <h3 class="eng-title">Monthly Retainer</h3>
+        <p class="eng-desc">Guaranteed hours every month, priority response, and a dedicated point of contact. Ideal for companies that need ongoing ServiceNow support without hiring full-time.</p>
+        <div class="eng-list">
+          <div class="eng-item">Guaranteed monthly hours</div>
+          <div class="eng-item">Priority response SLA</div>
+          <div class="eng-item">Proactive health monitoring</div>
+          <div class="eng-item">Monthly progress reporting</div>
+        </div>
+        <a href="get-a-quote.html" class="btn btn-ghost" style="width:100%;">Discuss Retainer →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 6 SERVICES -->
+<div class="services-full">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">What We Do</span>
+      <h2 class="section-title">All ServiceNow Service Lines</h2>
+      <p class="section-subtitle">Every service area covered by certified professionals with real production experience.</p>
+    </div>
+    <div class="services-full-grid">
+      <div class="svc-card">
+        <div class="svc-icon">💻</div>
+        <h3 class="svc-title">ServiceNow Development</h3>
+        <p class="svc-desc">Custom application development, scripting, and automation built to your exact requirements. From simple Business Rules to full scoped applications.</p>
+        <ul class="svc-includes">
+          <li>Custom app and table design</li>
+          <li>Business Rules, Script Includes, Client Scripts</li>
+          <li>Flow Designer and Workflow automation</li>
+          <li>Service Catalog design and build</li>
+          <li>Service Portal and widget development</li>
+        </ul>
+        <a href="get-a-quote.html" class="btn btn-outline" style="margin-top:auto;">Get a Quote</a>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">⚙️</div>
+        <h3 class="svc-title">ServiceNow Administration</h3>
+        <p class="svc-desc">Full platform administration — from initial configuration to ongoing management. Ideal for companies without dedicated in-house ServiceNow admin resource.</p>
+        <ul class="svc-includes">
+          <li>User, group, and role management</li>
+          <li>Form and list configuration</li>
+          <li>Update Set management</li>
+          <li>Service Catalog administration</li>
+          <li>Platform upgrades and patching</li>
+        </ul>
+        <a href="get-a-quote.html" class="btn btn-outline" style="margin-top:auto;">Get a Quote</a>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">🔧</div>
+        <h3 class="svc-title">ServiceNow Maintenance</h3>
+        <p class="svc-desc">Proactive platform maintenance to keep your instance healthy, performant, and upgrade-ready. Catch problems before they become incidents.</p>
+        <ul class="svc-includes">
+          <li>Regular Instance Scan health checks</li>
+          <li>Performance monitoring and tuning</li>
+          <li>Technical debt identification</li>
+          <li>Scheduled job monitoring</li>
+          <li>Upgrade readiness assessment</li>
+        </ul>
+        <a href="get-a-quote.html" class="btn btn-outline" style="margin-top:auto;">Get a Quote</a>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">🛟</div>
+        <h3 class="svc-title">ServiceNow Support</h3>
+        <p class="svc-desc">Reactive support when things break. Fast response, root cause analysis, and permanent fixes — not just workarounds.</p>
+        <ul class="svc-includes">
+          <li>Break-fix and incident response</li>
+          <li>Integration failure diagnosis</li>
+          <li>Business Rule and script debugging</li>
+          <li>ACL and access issue resolution</li>
+          <li>Post-upgrade issue remediation</li>
+        </ul>
+        <a href="get-a-quote.html" class="btn btn-outline" style="margin-top:auto;">Get a Quote</a>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">🏗️</div>
+        <h3 class="svc-title">ServiceNow Consulting</h3>
+        <p class="svc-desc">Strategic guidance for implementations, migrations, and platform evolution. We help you make the right architectural decisions before they become expensive mistakes.</p>
+        <ul class="svc-includes">
+          <li>Implementation planning and architecture</li>
+          <li>Platform roadmap development</li>
+          <li>Best practice review and advisory</li>
+          <li>Vendor and tooling evaluation</li>
+          <li>Team capability assessment</li>
+        </ul>
+        <a href="get-a-quote.html" class="btn btn-outline" style="margin-top:auto;">Get a Quote</a>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">🎯</div>
+        <h3 class="svc-title">Custom Development</h3>
+        <p class="svc-desc">Bespoke solutions for complex requirements — third-party integrations, custom REST APIs, advanced automations, and anything the standard platform doesn't cover out of the box.</p>
+        <ul class="svc-includes">
+          <li>REST / SOAP API integration build</li>
+          <li>OAuth 2.0 and MID Server setup</li>
+          <li>Scripted REST API development</li>
+          <li>IntegrationHub spoke development</li>
+          <li>Complex Flow Designer automation</li>
+        </ul>
+        <a href="get-a-quote.html" class="btn btn-outline" style="margin-top:auto;">Get a Quote</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="process-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Our Process</span>
+      <h2 class="section-title">How Every Engagement Works</h2>
+    </div>
+    <div class="process-grid">
+      <div class="proc-step"><div class="proc-num">1</div><h4>Submit a Quote Request</h4><p>Tell us what you need via the quote form — as much or as little detail as you have right now</p></div>
+      <div class="proc-step"><div class="proc-num">2</div><h4>We Scope It</h4><p>We review your requirements and come back within 24 hours with a clear proposal and timeline</p></div>
+      <div class="proc-step"><div class="proc-num">3</div><h4>We Build It</h4><p>Work begins on your agreed timeline — with regular updates and full transparency throughout</p></div>
+      <div class="proc-step"><div class="proc-num">4</div><h4>Handover &amp; Support</h4><p>We deliver with documentation and provide a support window to make sure everything runs smoothly</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<div class="cta-section">
+  <div class="glow"></div>
+  <div class="container">
+    <span class="section-tag light">Ready to start?</span>
+    <h2 class="section-title light" style="margin-top:12px;">Tell us what you need.</h2>
+    <p style="font-size:17px;color:rgba(255,255,255,0.55);max-width:480px;margin:14px auto 32px;line-height:1.7;">No commitment, no pressure. Just tell us about your project and we will come back with a clear proposal within 24 hours.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="get-a-quote.html" class="btn btn-primary btn-lg">Get a Free Quote →</a>
+      <a href="mailto:nowspectrumhq@gmail.com" class="btn btn-ghost btn-lg">Email Us Directly</a>
+    </div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+
+<script src="components/header.js"></script>
+<script src="components/footer.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
