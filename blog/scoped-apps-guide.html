@@ -4,44 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Understand ServiceNow scoped applications — namespace isolation, Application Access settings, and how they affect scripting.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
   <title>Scoped Applications in ServiceNow: Why They Matter and How to Work with Them | NowSpectrum</title>
-  <link rel="icon" type="image/png" href="../assets/nowspectrum-white-icon.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-<nav class="nav" id="nav">
-  <div class="nav-inner">
-    <a href="../index.html" class="nav-logo">
-      <img src="../assets/horizontal-logo.svg" alt="NowSpectrum" class="logo-img">
-    </a>
-    <ul class="nav-links">
-      <li><a href="../index.html" class="nav-link">Home</a></li>
-      <li><a href="../products.html" class="nav-link">Products</a></li>
-      <li><a href="../services.html" class="nav-link">Services</a></li>
-      <li><a href="../hire-a-consultant.html" class="nav-link">Hire a Consultant</a></li>
-      <li><a href="../find-a-job.html" class="nav-link">Find a Job</a></li>
-      <li><a href="../blog.html" class="nav-link active">Blog</a></li>
-      <li><a href="../about.html" class="nav-link">About</a></li>
-    </ul>
-    <a href="../hire-a-consultant.html" class="btn btn-primary nav-cta">Hire a Consultant</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-  <div class="nav-mobile" id="navMobile">
-    <a href="../index.html" class="nav-link">Home</a>
-    <a href="../products.html" class="nav-link">Products</a>
-    <a href="../services.html" class="nav-link">Services</a>
-    <a href="../hire-a-consultant.html" class="nav-link">Hire a Consultant</a>
-    <a href="../find-a-job.html" class="nav-link">Find a Job</a>
-    <a href="../blog.html" class="nav-link active">Blog</a>
-    <a href="../about.html" class="nav-link">About</a>
-    <a href="../hire-a-consultant.html" class="btn btn-primary">Hire a Consultant</a>
-  </div>
-</nav>
+<div id="site-header"></div>
+
 <div style="padding-top:64px">
   <div class="post-layout">
     <div class="post-header">
@@ -108,6 +84,9 @@ var myUtil = new x_nowspec_myapp.MyUtil();
     </div>
   </div>
 </div>
+
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
 <script src="../js/main.js"></script>
 </body>
 </html>
