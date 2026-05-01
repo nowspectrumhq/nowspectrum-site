@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Configure all four OAuth 2.0 flows in ServiceNow — Client Credentials, Authorization Code, Resource Owner Password, and JWT Bearer.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <title>OAuth 2.0 in ServiceNow: All Four Flows Explained | NowSpectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Integrations</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">OAuth 2.0 in ServiceNow: All Four Flows Explained</h1>
+      <p class="post-intro">ServiceNow supports all four standard OAuth 2.0 grant types. Which one you use depends on the integration scenario. Here is each flow explained with configuration steps and when to use it.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>OAuth 2.0 Provider setup</h2>
+<p>Before configuring any OAuth flow, navigate to <strong>System OAuth > Application Registry</strong> and create an OAuth provider record for your external application. This is where client_id and client_secret are generated.</p>
+<h2>Flow 1: Client Credentials (most common for server-to-server)</h2>
+<p>Use when: a server or service needs to call ServiceNow APIs without a user context. No user login required. The calling application authenticates as itself.</p>
+<pre><code>POST /oauth_token.do
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials
+&client_id=[your_client_id]
+&client_secret=[your_client_secret]</code></pre>
+<p>Response: access_token with expiry. Store and reuse until expiry, then re-request.</p>
+<h2>Flow 2: Authorization Code (for user-delegated access)</h2>
+<p>Use when: a third-party application needs to act on behalf of a specific ServiceNow user. Involves a browser redirect for user login.</p>
+<pre><code>Step 1: Redirect user to:
+GET /oauth_auth.do?response_type=code&client_id=[id]&redirect_uri=[uri]
+
+Step 2: User logs in, ServiceNow redirects back with ?code=[auth_code]
+
+Step 3: Exchange code for token:
+POST /oauth_token.do
+grant_type=authorization_code&code=[auth_code]&client_id=[id]&client_secret=[secret]&redirect_uri=[uri]</code></pre>
+<h2>Flow 3: Resource Owner Password Credentials (avoid in new integrations)</h2>
+<p>Use when: migrating a legacy integration that used username/password. Not recommended for new work — exposes user credentials to the calling app.</p>
+<pre><code>POST /oauth_token.do
+grant_type=password&username=[user]&password=[pass]&client_id=[id]&client_secret=[secret]</code></pre>
+<h2>Flow 4: JWT Bearer Token</h2>
+<p>Use when: calling ServiceNow from a system that already has a JWT (Okta, Azure AD, etc.). ServiceNow validates the JWT signature against a configured public key.</p>
+<p>Setup requires configuring a JWT Provider in System OAuth > JWT Providers with the issuer, audience, and signing key.</p>
+<h2>Token refresh</h2>
+<p>Access tokens expire (default 30 minutes for ServiceNow). Use the refresh_token returned with Authorization Code flow to get new access tokens without re-authenticating:</p>
+<pre><code>POST /oauth_token.do
+grant_type=refresh_token&refresh_token=[token]&client_id=[id]&client_secret=[secret]</code></pre>
+<h2>Outbound OAuth (ServiceNow calling external systems)</h2>
+<p>For ServiceNow calling out to OAuth-protected APIs, configure an OAuth Profile at <strong>System OAuth > OAuth Profiles</strong> and reference it via a Connection Alias — then it is available in Flow Designer and REST Messages automatically.</p>    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

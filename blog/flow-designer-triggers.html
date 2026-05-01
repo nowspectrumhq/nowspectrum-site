@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A complete guide to all Flow Designer trigger types in ServiceNow — record-based, schedule-based, application-based, and inbound email.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <title>Flow Designer Triggers: Every Type Explained with Real Examples | NowSpectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Flow Designer</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">Flow Designer Triggers: Every Type Explained with Real Examples</h1>
+      <p class="post-intro">The trigger is the most important decision in any Flow Designer flow. It determines when the flow runs, what record it operates on, and what data is available. Here is every trigger type with real examples.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>Record-based triggers</h2>
+<p>The most common trigger type. Fires when a record on a specific table is created, updated, or both.</p>
+<p>Configuration options:</p>
+<ul>
+<li><strong>Created</strong> — fires once when the record is first inserted</li>
+<li><strong>Updated</strong> — fires when specified fields change</li>
+<li><strong>Created or Updated</strong> — fires on both operations</li>
+<li><strong>Deleted</strong> — fires when the record is deleted</li>
+</ul>
+<p>Example: Send a Slack message when an incident is assigned:</p>
+<pre><code>Table: Incident
+Trigger: Updated
+Condition: Assigned To changes AND Assigned To is not empty</code></pre>
+<h2>Run trigger — Once vs Always vs For each unique change</h2>
+<p>This is the most misunderstood setting on record triggers:</p>
+<ul>
+<li><strong>Once</strong> — runs the first time conditions are met, then never again for that record. Useful for onboarding flows.</li>
+<li><strong>Always</strong> — runs every time the conditions are met on any update</li>
+<li><strong>For each unique change</strong> — runs only when the triggering condition changes to true from false</li>
+</ul>
+<h2>Schedule-based triggers</h2>
+<p>Runs on a timer — daily, weekly, every N hours/minutes.</p>
+<pre><code>Trigger: Daily
+Time: 08:00 UTC
+Condition: (none, or filter records to process)</code></pre>
+<p>Use for: end-of-day reports, SLA breach checks, cleanup jobs, recurring notifications.</p>
+<h2>Application-based triggers</h2>
+<p>Triggers that fire based on platform events rather than record changes:</p>
+<ul>
+<li><strong>Inbound Email</strong> — fires when an email arrives matching filters</li>
+<li><strong>Service Catalog</strong> — fires when a catalog item is requested</li>
+<li><strong>SLA</strong> — fires when an SLA reaches a breach percentage</li>
+<li><strong>Metric</strong> — fires when a metric threshold is crossed</li>
+</ul>
+<h2>Subflow triggers</h2>
+<p>Subflows are triggered explicitly when called from a parent flow or another subflow — they do not have their own schedule or record trigger. They receive input variables defined in their trigger configuration.</p>
+<h2>Conditions vs Trigger filter</h2>
+<p>The trigger filter runs before the flow executes to decide whether it should run at all. Keep trigger filters as specific as possible — every execution has a cost even if the flow exits early.</p>    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

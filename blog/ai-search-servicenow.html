@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Understand and configure ServiceNow AI Search — how it replaces keyword search with natural language understanding.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <title>AI Search in ServiceNow: How It Works and How to Configure It | NowSpectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Now Assist</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">AI Search in ServiceNow: How It Works and How to Configure It</h1>
+      <p class="post-intro">AI Search replaces ServiceNow's traditional keyword search with natural language processing. Users can ask questions in plain English and get relevant results rather than keyword-matched documents.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>What AI Search changes</h2><p>Traditional ServiceNow search uses keyword matching — it finds articles and records that contain the exact words you searched for. AI Search uses semantic similarity — it understands the intent of your query and matches it against the meaning of documents, even when the exact words do not appear.</p><p>Example: A user searches "my laptop won't turn on". Traditional search finds articles containing those exact words. AI Search understands this is a power/boot issue and returns articles about battery replacement, power adapter troubleshooting, and hardware failure — even if they do not contain "won't turn on".</p><h2>Setup requirements</h2><ul><li>ServiceNow Washington DC or later</li><li>Unified Search plugin activated</li><li>AI Search entitlement (check your licence)</li><li>Knowledge base articles published and indexed</li></ul><h2>Configuring AI Search</h2><p>Navigate to <strong>System Definition > AI Search Administration</strong>. Key configuration items:</p><ol><li>Create an AI Search Profile — defines which tables are searched and what fields are included in the search index</li><li>Add Sources — which knowledge bases, service catalog items, and tables are searchable</li><li>Configure Field Weights — which fields carry more weight in relevance ranking</li><li>Run initial indexing — AI Search needs to build embeddings for all existing documents</li></ol><h2>Embedding generation</h2><p>AI Search works by converting documents to vector embeddings — mathematical representations of document meaning. This indexing step runs when you first activate and then incrementally as documents are created or updated. Large knowledge bases take hours to fully index on first run.</p><h2>Testing search quality</h2><p>Use the Search Admin Test panel to query your index and see: which results are returned, their relevance scores, and which source they came from. Use this to tune field weights and identify gaps in your knowledge base coverage.</p>
+    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

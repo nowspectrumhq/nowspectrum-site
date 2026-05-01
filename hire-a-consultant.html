@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hire a vetted ServiceNow consultant, developer, or architect. NowSpectrum connects companies with experienced ServiceNow professionals.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <title>Hire a ServiceNow Consultant | NowSpectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .funnel-hero { padding: 120px 0 70px; background: var(--dark); text-align: center; position: relative; overflow: hidden; }
+    .funnel-hero .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(26,86,160,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(26,86,160,0.07) 1px,transparent 1px); background-size: 60px 60px; }
+    .funnel-hero .hero-glow-1 { position: absolute; width: 400px; height: 400px; background: var(--blue); border-radius: 50%; filter: blur(80px); opacity: 0.12; top: -100px; right: -50px; }
+    .funnel-hero .hero-glow-2 { position: absolute; width: 300px; height: 300px; background: var(--green); border-radius: 50%; filter: blur(80px); opacity: 0.1; bottom: -50px; left: -50px; }
+    .funnel-hero .container { position: relative; z-index: 1; }
+    .trust-logos { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 40px; }
+    .trust-pill { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); padding: 8px 18px; border-radius: 100px; font-size: 13px; font-weight: 500; }
+    .how-it-works { padding: 80px 0; background: var(--bg-2); }
+    .steps-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; position: relative; }
+    .steps-row::before { content: ''; position: absolute; top: 22px; left: 10%; right: 10%; height: 2px; background: linear-gradient(90deg, var(--green), var(--blue)); opacity: 0.3; z-index: 0; }
+    .step-box { text-align: center; padding: 24px 16px; position: relative; z-index: 1; }
+    .step-circle { width: 44px; height: 44px; border-radius: 50%; background: var(--green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; margin: 0 auto 14px; box-shadow: 0 4px 14px rgba(22,163,74,0.35); }
+    .step-box h4 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .step-box p { font-size: 13px; color: var(--text-3); line-height: 1.6; }
+    .why-us { padding: 80px 0; }
+    .why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+    .why-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--shadow); }
+    .why-icon { font-size: 28px; margin-bottom: 14px; }
+    .why-card h3 { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .why-card p { font-size: 14px; color: var(--text-3); line-height: 1.7; }
+    .form-section { padding: 80px 0; background: var(--bg-2); }
+    .form-container { max-width: 680px; margin: 0 auto; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 48px; box-shadow: var(--shadow-xl); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-select { padding: 12px 16px; border: 1px solid var(--border-2); border-radius: var(--radius); font-family: var(--font-body); font-size: 15px; color: var(--text); background: var(--bg); transition: border-color 0.2s; width: 100%; appearance: none; }
+    .form-select:focus { outline: none; border-color: var(--green); }
+    .form-title { font-size: 26px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .form-sub { font-size: 15px; color: var(--text-3); margin-bottom: 32px; }
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; }
+    .checkbox-item { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-2); cursor: pointer; }
+    .checkbox-item input { accent-color: var(--green); width: 16px; height: 16px; cursor: pointer; }
+    .roles-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 48px; }
+    .role-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; text-align: center; box-shadow: var(--shadow); }
+    .role-icon { font-size: 28px; margin-bottom: 10px; }
+    .role-card h4 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .role-card p { font-size: 13px; color: var(--text-3); }
+    @media(max-width:768px) { .steps-row,.why-grid,.roles-grid { grid-template-columns:1fr 1fr; } .form-row { grid-template-columns:1fr; } .steps-row::before { display:none; } }
+    @media(max-width:480px) { .why-grid,.roles-grid { grid-template-columns:1fr; } .form-container { padding:28px 20px; } }
+  </style>
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<div class="funnel-hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+  <div class="container">
+    <div class="hero-badge"><span class="badge-dot"></span>Vetted ServiceNow Talent</div>
+    <h1 class="hero-title">Find the Right<br><span class="text-gradient">ServiceNow Expert</span><br>For Your Project</h1>
+    <p class="hero-subtitle">We connect companies with vetted ServiceNow developers, admins, and architects — contract or permanent, remote or on-site.</p>
+    <a href="#request-form" class="btn btn-primary btn-lg">Submit Your Requirements →</a>
+    <div class="trust-logos">
+      <span class="trust-pill">ServiceNow Developers</span>
+      <span class="trust-pill">System Administrators</span>
+      <span class="trust-pill">Technical Architects</span>
+      <span class="trust-pill">ITSM Consultants</span>
+      <span class="trust-pill">Integration Specialists</span>
+      <span class="trust-pill">Now Assist / AI Experts</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROLES WE COVER -->
+<section class="section" style="padding:72px 0;">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Talent We Place</span>
+      <h2 class="section-title">Every ServiceNow Role Covered</h2>
+      <p class="section-subtitle">From junior admins to principal architects — we have the talent for every level and specialisation.</p>
+    </div>
+    <div class="roles-grid">
+      <div class="role-card"><div class="role-icon">⚙️</div><h4>System Administrator</h4><p>Platform config, users, workflows, catalog management</p></div>
+      <div class="role-card"><div class="role-icon">💻</div><h4>Application Developer</h4><p>Scripting, integrations, custom apps, Flow Designer</p></div>
+      <div class="role-card"><div class="role-icon">🏗️</div><h4>Technical Architect</h4><p>Solution design, best practices, platform governance</p></div>
+      <div class="role-card"><div class="role-icon">🔗</div><h4>Integration Specialist</h4><p>REST/SOAP APIs, IntegrationHub, MID Server, OAuth</p></div>
+      <div class="role-card"><div class="role-icon">📊</div><h4>ITSM Consultant</h4><p>Incident, Problem, Change, CMDB, SLA management</p></div>
+      <div class="role-card"><div class="role-icon">🤖</div><h4>Now Assist / AI Expert</h4><p>AI Search, Virtual Agent, Now Assist activation</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<div class="how-it-works">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Process</span>
+      <h2 class="section-title">How It Works</h2>
+    </div>
+    <div class="steps-row">
+      <div class="step-box"><div class="step-circle">1</div><h4>Submit Requirements</h4><p>Fill out the form below with your role, skills, and timeline</p></div>
+      <div class="step-box"><div class="step-circle">2</div><h4>We Review</h4><p>We assess your needs and match against our talent pool within 48 hours</p></div>
+      <div class="step-box"><div class="step-circle">3</div><h4>Candidate Shortlist</h4><p>Receive 2–3 vetted profiles with experience matched to your requirements</p></div>
+      <div class="step-box"><div class="step-circle">4</div><h4>Interview & Hire</h4><p>Interview candidates and onboard your chosen consultant on your timeline</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY NOWSPECTRUM -->
+<div class="why-us">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Why Us</span>
+      <h2 class="section-title">Why Companies Choose NowSpectrum</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card"><div class="why-icon">🎯</div><h3>ServiceNow Only</h3><p>We are a ServiceNow-specialist platform. Every candidate we work with is dedicated to the ServiceNow ecosystem — not a generalist IT pool.</p></div>
+      <div class="why-card"><div class="why-icon">✅</div><h3>Pre-Vetted Talent</h3><p>Every consultant is assessed on platform knowledge, scripting ability, and real project experience before we match them with clients.</p></div>
+      <div class="why-card"><div class="why-icon">⚡</div><h3>Fast Turnaround</h3><p>We respond within 48 hours with matched profiles. No lengthy processes — we move at the speed your project needs.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- FORM -->
+<div class="form-section" id="request-form">
+  <div class="container">
+    <div class="form-container">
+      <h2 class="form-title">Submit Your Requirements</h2>
+      <p class="form-sub">Tell us what you need and we will be in touch within 48 hours.</p>
+      <form id="hire-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Company Name *</label>
+            <input type="text" class="form-input" placeholder="Acme Corp" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Your Name *</label>
+            <input type="text" class="form-input" placeholder="John Smith" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Work Email *</label>
+            <input type="email" class="form-input" placeholder="john@company.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-input" placeholder="+1 (555) 000-0000">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Role Needed *</label>
+            <select class="form-select" required>
+              <option value="">Select a role...</option>
+              <option>System Administrator</option>
+              <option>Application Developer</option>
+              <option>Technical Architect</option>
+              <option>Integration Specialist</option>
+              <option>ITSM Consultant</option>
+              <option>Now Assist / AI Expert</option>
+              <option>Other — I'll describe below</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Engagement Type *</label>
+            <select class="form-select" required>
+              <option value="">Select type...</option>
+              <option>Contract / Freelance</option>
+              <option>Permanent / Full-Time</option>
+              <option>Contract to Hire</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Experience Level *</label>
+            <select class="form-select" required>
+              <option value="">Select level...</option>
+              <option>Junior (0–2 years)</option>
+              <option>Mid-Level (2–5 years)</option>
+              <option>Senior (5+ years)</option>
+              <option>Architect / Principal</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Start Timeline *</label>
+            <select class="form-select" required>
+              <option value="">Select timeline...</option>
+              <option>ASAP (within 1 week)</option>
+              <option>Within 2–4 weeks</option>
+              <option>Within 1–2 months</option>
+              <option>Flexible / Planning ahead</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Key Skills / Modules Required</label>
+          <div class="checkbox-group" style="margin-top:6px;">
+            <label class="checkbox-item"><input type="checkbox" value="ITSM"> ITSM</label>
+            <label class="checkbox-item"><input type="checkbox" value="ITOM"> ITOM / CMDB</label>
+            <label class="checkbox-item"><input type="checkbox" value="Flow Designer"> Flow Designer</label>
+            <label class="checkbox-item"><input type="checkbox" value="Integrations"> REST Integrations</label>
+            <label class="checkbox-item"><input type="checkbox" value="Service Portal"> Service Portal</label>
+            <label class="checkbox-item"><input type="checkbox" value="HRSD"> HRSD</label>
+            <label class="checkbox-item"><input type="checkbox" value="SecOps"> SecOps</label>
+            <label class="checkbox-item"><input type="checkbox" value="Now Assist"> Now Assist / AI</label>
+            <label class="checkbox-item"><input type="checkbox" value="GRC"> GRC</label>
+            <label class="checkbox-item"><input type="checkbox" value="CSM"> CSM</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Work Location Preference</label>
+          <select class="form-select">
+            <option value="">Select preference...</option>
+            <option>Remote only</option>
+            <option>On-site (please specify in notes)</option>
+            <option>Hybrid</option>
+            <option>Flexible</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Budget Range (optional)</label>
+          <select class="form-select">
+            <option value="">Prefer not to say</option>
+            <option>Under $50/hr</option>
+            <option>$50–$80/hr</option>
+            <option>$80–$120/hr</option>
+            <option>$120–$150/hr</option>
+            <option>$150+/hr</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Additional Notes</label>
+          <textarea class="form-textarea" placeholder="Describe the project, specific experience needed, certifications required, or anything else that will help us find the right match..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;margin-top:8px;">Submit Requirements →</button>
+        <p style="font-size:13px;color:var(--text-3);text-align:center;margin-top:12px;">We respond within 48 hours. No commitment required.</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+
+<script src="components/header.js"></script>
+<script src="components/footer.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

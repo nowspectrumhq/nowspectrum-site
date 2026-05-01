@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Understand exactly what current and previous contain in each ServiceNow Business Rule type — and why they behave differently.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <title>current vs previous in Business Rules: What They Actually Contain | NowSpectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Scripting</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">current vs previous in Business Rules: What They Actually Contain</h1>
+      <p class="post-intro">current and previous are the two most-used objects in Business Rules. Most developers assume they know what each contains. Most are partially wrong — especially about previous in async rules.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>What is current?</h2>
+<p>In a Business Rule, <code>current</code> is a GlideRecord object representing the record being processed. In Before rules, it contains the new values being saved. In After and Async rules, it contains the saved values.</p>
+<h2>What is previous?</h2>
+<p>previous contains the field values from before the current operation. In an Update operation, previous.state gives you the state before the user's changes.</p>
+<pre><code>if (current.state != previous.state) {
+    gs.log('State changed from ' + previous.state + ' to ' + current.state);
+}</code></pre>
+<h2>previous in Insert operations</h2>
+<p>When a record is being inserted (not updated), previous is an empty GlideRecord. All fields will return empty values. Always check the operation before using previous:</p>
+<pre><code>if (current.operation() == 'update') {
+    // Safe to use previous here
+    var oldState = previous.getValue('state');
+}</code></pre>
+<h2>previous in Async rules</h2>
+<p>This is where most developers get caught. In Async rules, previous often does not contain the expected pre-change values — by the time the async rule runs, the original values may no longer be reliably available. Do not rely on previous in async rules for important logic. Capture what you need in a Before or After rule and store it on the record or in a separate table if needed.</p>
+<h2>Checking what changed</h2>
+<pre><code>// Check if a specific field changed
+if (current.state.changes()) {
+    // state was modified in this operation
+}
+// Get the previous value of a specific field
+var oldAssignee = current.assigned_to.getOldValue();</code></pre>
+<h2>current.operation()</h2>
+<p>Returns the DML operation: 'insert', 'update', or 'delete'. Always check this when your rule logic depends on it.</p>    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

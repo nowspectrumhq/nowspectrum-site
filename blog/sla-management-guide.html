@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A practical guide to ServiceNow SLAs — how they work, why they breach unexpectedly, and how to debug them.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <title>SLA Management in ServiceNow: Definitions, Retroactive Start, and Troubleshooting | NowSpectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Modules</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">SLA Management in ServiceNow: Definitions, Retroactive Start, and Troubleshooting</h1>
+      <p class="post-intro">SLAs measure response and resolution time for tickets. They are notoriously difficult to configure correctly and even harder to debug when they breach unexpectedly. Here is how they actually work.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>Key SLA concepts</h2><p><strong>SLA Definition:</strong> The configuration record that defines the SLA — which table it applies to, what conditions trigger it, the target duration, schedule, and pause conditions.</p><p><strong>Task SLA:</strong> The record created when an SLA Definition attaches to a specific record. This is the live timer — it shows start time, breach time, percentage complete, and current state.</p><h2>SLA states</h2><ul><li><strong>In Progress</strong> — actively counting down</li><li><strong>Paused</strong> — paused by a condition (On Hold state, waiting for user, etc.)</li><li><strong>Completed</strong> — met before breach</li><li><strong>Breached</strong> — target exceeded</li></ul><h2>Retroactive start</h2><p>Retroactive start means the SLA starts from the record's created time, not from when the SLA Definition was activated. If you activate an SLA Definition on a table with existing records, retroactive start means those existing records immediately have SLAs that are potentially already breached.</p><p>This is the most common source of unexpected breaches on first activation. Test SLA Definitions on a test instance first.</p><h2>Schedules and SLAs</h2><p>SLAs can be tied to business hour schedules — the countdown only runs during business hours. A "4-hour response" SLA on a business hours schedule gives you 4 business hours, not 4 calendar hours. Make sure your SLA target duration and schedule align with stakeholder expectations.</p><h2>Debugging unexpected breaches</h2><ol><li>Open the Task SLA record (Activities section > SLA tab on the incident)</li><li>Check Start Time, Stage, and Business Duration fields</li><li>Look at the SLA workflow execution log to see state transitions</li><li>Verify the SLA Definition conditions match what you intend</li><li>Check whether the SLA is attached to the right schedule</li></ol><h2>Multiple SLAs on one record</h2><p>A single incident can have multiple Task SLA records — one for response time, one for resolution time. Each is evaluated and tracked independently. This is normal and expected.</p>
+    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

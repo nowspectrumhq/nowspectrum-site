@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Flow Designer vs Business Rules — when to use each in ServiceNow. The honest, practical answer with real examples.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <meta name="keywords" content="ServiceNow, Flow Designer, Business Rules, automation, scripting, best practices">
+  <title>Flow Designer vs Business Rules — The Honest Answer | NowSpectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<div style="padding-top: 64px;">
+  <div class="post-layout">
+
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Flow Designer</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">Flow Designer vs Business Rules — The Honest Answer</h1>
+      <p class="post-intro">Everyone says use Flow Designer for everything. But there are still real cases where a Business Rule is the right tool. Here is exactly when to use which — and the reasoning behind it.</p>
+    </div>
+
+    <div class="post-divider"></div>
+
+    <div class="post-body">
+
+      <h2>The short answer</h2>
+      <p>Use Flow Designer by default. Use a Business Rule when you specifically need synchronous execution that affects the record being saved in the same database transaction.</p>
+      <p>That is the rule. Everything below is the reasoning.</p>
+
+      <h2>What Flow Designer gives you that Business Rules do not</h2>
+      <p>Flow Designer runs asynchronously by default — it does not block the user's save action. The user clicks Save, the record is committed to the database, and the flow runs in the background. This means:</p>
+      <ul>
+        <li>The user interface stays responsive — no waiting for the automation to complete</li>
+        <li>Long-running operations (external API calls, approval chains, multi-step processes) do not time out</li>
+        <li>Built-in error handling with the Error Handler spoke — you can catch failures gracefully</li>
+        <li>Execution Details provides a complete log of every step, every input, every output — far better than hunting through the System Log</li>
+        <li>Visual, readable, and maintainable by people who are not developers</li>
+        <li>IntegrationHub spokes handle authentication, retry logic, and error handling for external integrations automatically</li>
+      </ul>
+      <p>For the vast majority of automation — notifications, approvals, external API calls, multi-step workflows — Flow Designer is the right choice.</p>
+
+      <h2>When a Business Rule is still the right tool</h2>
+      <p>Business Rules run synchronously in the same database transaction as the triggering event. This is their defining characteristic — and it is both their strength and their limitation.</p>
+      <p>Use a Business Rule when:</p>
+      <ul>
+        <li><strong>You need to auto-populate a field before the record is saved.</strong> For example: set the resolution code based on the category before the record is committed. A Before Business Rule can do this. Flow Designer cannot — by the time it runs, the record is already saved.</li>
+        <li><strong>You need to prevent the save entirely based on a condition.</strong> A Before Business Rule can call <code>current.setAbortAction(true)</code> to stop the record from saving. There is no equivalent in Flow Designer.</li>
+        <li><strong>You need to validate data at the server level before saving.</strong> UI Policies can be bypassed by the REST API. Before Business Rules cannot.</li>
+        <li><strong>You need very lightweight logic that must complete in microseconds.</strong> For simple field calculations that must happen before the save, a Before Business Rule has less overhead than a flow.</li>
+      </ul>
+
+      <h2>The practical decision tree</h2>
+      <p>Ask yourself these questions in order:</p>
+      <ul>
+        <li>Does this need to run before the record is saved and affect what gets saved? → Business Rule (Before)</li>
+        <li>Does this need to abort the save under any condition? → Business Rule (Before)</li>
+        <li>Does this involve multiple steps, external systems, approvals, or notifications? → Flow Designer</li>
+        <li>Everything else → Flow Designer</li>
+      </ul>
+
+      <h2>The maintenance argument</h2>
+      <p>There is a second reason to prefer Flow Designer beyond technical capability: maintainability. A Business Rule is a JavaScript file that requires a developer to read, understand, and modify. A Flow Designer flow can be read and understood by a ServiceNow admin, a business analyst, or a process owner — not just a developer.</p>
+      <p>When you leave a project, the team that maintains your work will thank you for flows over scripts. This is a real consideration in production environments.</p>
+
+      <h2>What about legacy Workflow?</h2>
+      <p>Legacy Workflow is being deprecated. Do not build new automation in Workflow. If you have existing Workflow automations, plan to migrate them to Flow Designer. ServiceNow's future investment is in Flow Designer — not Workflow.</p>
+
+      <h2>The rule one more time</h2>
+      <p>Flow Designer is the default. Business Rules are for synchronous pre-save logic and save prevention. Everything else — notifications, integrations, approvals, multi-step automation — goes in Flow Designer. This is the answer interviewers are looking for, and the pattern that holds up in production.</p>
+
+    </div>
+
+        <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border);">
+      <a href="../blog.html" style="color: var(--green); font-weight: 600; font-size: 14px;">← Back to all posts</a>
+    </div>
+
+  </div>
+</div>
+
+<div id="site-footer"></div>
+
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A complete guide to debugging ServiceNow scripts — from basic logging to using the interactive Script Debugger.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <title>Debugging ServiceNow Scripts: gs.log, gs.debug, and the Script Debugger | NowSpectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Scripting</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">Debugging ServiceNow Scripts: gs.log, gs.debug, and the Script Debugger</h1>
+      <p class="post-intro">Debugging in ServiceNow is not as obvious as in most development environments. There is no console.log that shows up anywhere useful. Here is every tool available and when to use each one.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>gs.log() — the basics</h2>
+<p>gs.log() writes to the System Log (System > System Log > All). This is your first line of debugging for server-side scripts:</p>
+<pre><code>gs.log('Value of state: ' + current.getValue('state'));
+gs.log('Record sys_id: ' + current.sys_id);</code></pre>
+<p>View logs at <strong>System > System Log > All</strong> and filter by Source (usually the script name) or message content.</p>
+<h2>Log levels</h2>
+<pre><code>gs.info('Normal operation message');
+gs.warn('Something unexpected but non-fatal');
+gs.error('Something failed — check this');</code></pre>
+<p>In production instances, debug logs are suppressed. Use gs.info() or gs.log() for messages you want to see in production.</p>
+<h2>gs.debug() with session debug</h2>
+<p>Turn on session-level debug logging at <strong>System Diagnostics > Session Debug > Log</strong>. Then gs.debug() messages appear in the session log — useful for tracing execution flow without cluttering the system log.</p>
+<h2>The Script Background page</h2>
+<p>Navigate to <strong>System Definition > Scripts - Background</strong>. You can run any server-side JavaScript here interactively and see output immediately. Invaluable for testing logic before putting it in a Business Rule:</p>
+<pre><code>var gr = new GlideRecord('incident');
+gr.addEncodedQuery('active=true^state=1');
+gr.setLimit(5);
+gr.query();
+while (gr.next()) {
+    gs.log(gr.number + ': ' + gr.short_description);
+}</code></pre>
+<h2>The Script Debugger</h2>
+<p>The interactive Script Debugger works like a real IDE debugger — set breakpoints, step through code, inspect variable values. Access it at <strong>System Diagnostics > Script Debugger</strong>.</p>
+<p>To use it: open the debugger, check "All scripts" or set specific filters, then trigger the script (save a record, load a form, etc.). Execution pauses at breakpoints and you can inspect the call stack.</p>
+<h2>Try/catch for graceful error capture</h2>
+<pre><code>try {
+    var gr = new GlideRecord('incident');
+    gr.get(sys_id);
+    // ... do something
+} catch (e) {
+    gs.error('Error in MyScript: ' + e.message + ' | Stack: ' + e.stack);
+}</code></pre>
+<h2>Checking if a query returned results</h2>
+<pre><code>var gr = new GlideRecord('incident');
+gr.addQuery('number', 'INC0000001');
+gr.query();
+if (!gr.next()) {
+    gs.warn('No record found for INC0000001');
+    return;
+}</code></pre>    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

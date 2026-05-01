@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NowSpectrum — ServiceNow consulting, talent placement, and knowledge resources. Built by professionals, for professionals.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <meta property="og:title" content="NowSpectrum — The ServiceNow Platform for Professionals">
+  <meta property="og:description" content="Consulting, talent placement, practical guides, and a free weekly newsletter — everything ServiceNow in one place.">
+  <meta property="og:image" content="assets/og-image.webp">
+  <title>NowSpectrum — ServiceNow Consulting, Talent &amp; Knowledge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .audience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 40px; }
+    .audience-card {
+      border-radius: var(--radius-lg); padding: 40px;
+      display: flex; flex-direction: column; gap: 16px;
+      transition: all 0.25s; position: relative; overflow: hidden;
+    }
+    .audience-card-recruiter { background: var(--dark); border: 1px solid rgba(26,86,160,0.4); }
+    .audience-card-candidate { background: var(--dark); border: 1px solid rgba(22,163,74,0.4); }
+    .audience-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
+    .audience-icon { font-size: 36px; }
+    .audience-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; width: fit-content; }
+    .audience-tag-blue { color: #60A5FA; background: rgba(26,86,160,0.2); }
+    .audience-tag-green { color: var(--green-light); background: rgba(22,163,74,0.15); }
+    .audience-title { font-size: 24px; font-weight: 700; color: #fff; line-height: 1.2; }
+    .audience-desc { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.7; flex: 1; }
+    .audience-list { display: flex; flex-direction: column; gap: 8px; }
+    .audience-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.75); }
+    .audience-item::before { content: ''; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .audience-card-recruiter .audience-item::before { background: #60A5FA; }
+    .audience-card-candidate .audience-item::before { background: var(--green-light); }
+    .audience-glow-blue { position: absolute; width: 200px; height: 200px; background: var(--blue); border-radius: 50%; filter: blur(60px); opacity: 0.1; top: -60px; right: -60px; pointer-events: none; }
+    .audience-glow-green { position: absolute; width: 200px; height: 200px; background: var(--green); border-radius: 50%; filter: blur(60px); opacity: 0.1; bottom: -60px; left: -60px; pointer-events: none; }
+    .divider-line { height: 1px; background: var(--border); margin: 0; }
+    @media(max-width:768px) { .audience-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+  </div>
+  <div class="container">
+    <div class="hero-badge"><span class="badge-dot"></span>The ServiceNow Platform for Professionals</div>
+    <h1 class="hero-title">
+      Everything ServiceNow.<br>
+      <span class="text-gradient">One Platform.</span>
+    </h1>
+    <p class="hero-subtitle">Consulting services, talent placement, practical guides, and a free weekly newsletter — built by working ServiceNow professionals.</p>
+    <div class="hero-actions">
+      <a href="hire-a-consultant.html" class="btn btn-primary btn-lg">Hire a Consultant</a>
+      <a href="find-a-job.html" class="btn btn-ghost btn-lg">Find a Job</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">50+</span><span class="stat-label">Blog Articles</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">4</span><span class="stat-label">Products</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">3</span><span class="stat-label">Service Lines</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">100%</span><span class="stat-label">ServiceNow</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<section class="trust-bar">
+  <div class="container">
+    <p class="trust-label">Covering every area of the ServiceNow platform</p>
+    <div class="trust-tags">
+      <span class="tag">ITSM</span><span class="tag">ITOM</span><span class="tag">GlideRecord</span>
+      <span class="tag">Flow Designer</span><span class="tag">REST Integrations</span>
+      <span class="tag">OAuth 2.0</span><span class="tag">MID Server</span>
+      <span class="tag">ACLs</span><span class="tag">Now Assist AI</span>
+      <span class="tag">CMDB</span><span class="tag">Service Portal</span><span class="tag">Interview Prep</span>
+    </div>
+  </div>
+</section>
+
+<!-- TWO AUDIENCES -->
+<section class="section" style="background:var(--dark);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag light">Who We Serve</span>
+      <h2 class="section-title light">Built for Both Sides<br>of the ServiceNow Market</h2>
+    </div>
+    <div class="audience-grid">
+      <div class="audience-card audience-card-recruiter">
+        <div class="audience-glow-blue"></div>
+        <div class="audience-icon">🏢</div>
+        <span class="audience-tag audience-tag-blue">For Companies</span>
+        <h3 class="audience-title">Need a ServiceNow Expert?</h3>
+        <p class="audience-desc">We connect companies with vetted ServiceNow talent — developers, admins, and architects — for contract and permanent roles.</p>
+        <div class="audience-list">
+          <div class="audience-item">Pre-vetted ServiceNow professionals</div>
+          <div class="audience-item">All roles — admin, developer, architect</div>
+          <div class="audience-item">Contract, permanent, or contract-to-hire</div>
+          <div class="audience-item">Response within 48 hours</div>
+        </div>
+        <a href="hire-a-consultant.html" class="btn btn-outline" style="margin-top:8px;border-color:#60A5FA;color:#60A5FA;">Submit Your Requirements →</a>
+      </div>
+      <div class="audience-card audience-card-candidate">
+        <div class="audience-glow-green"></div>
+        <div class="audience-icon">👨‍💻</div>
+        <span class="audience-tag audience-tag-green">For Professionals</span>
+        <h3 class="audience-title">Looking for Your Next Role?</h3>
+        <p class="audience-desc">Submit your profile and we will match you with companies actively hiring ServiceNow talent. Your details stay private until you approve.</p>
+        <div class="audience-list">
+          <div class="audience-item">All experience levels welcome</div>
+          <div class="audience-item">Contract and permanent opportunities</div>
+          <div class="audience-item">Remote, hybrid, and on-site roles</div>
+          <div class="audience-item">Your profile stays private</div>
+        </div>
+        <a href="find-a-job.html" class="btn btn-primary" style="margin-top:8px;">Submit Your Profile →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Services</span>
+      <h2 class="section-title">ServiceNow Consulting &amp; Development</h2>
+      <p class="section-subtitle">Hands-on implementation, integration, and optimisation services delivered by certified ServiceNow professionals.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card featured">
+        <div class="service-icon">🔗</div>
+        <h3 class="service-title">Integration Development</h3>
+        <p class="service-desc">REST APIs, SOAP, IntegrationHub spokes, OAuth 2.0, MID Server setup — end-to-end integration design and build.</p>
+        <ul class="service-includes">
+          <li>REST / SOAP integration build</li>
+          <li>OAuth 2.0 configuration</li>
+          <li>MID Server setup and testing</li>
+          <li>IntegrationHub spoke development</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline" style="margin-top:auto;">Get a Quote</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⚙️</div>
+        <h3 class="service-title">Platform Development</h3>
+        <p class="service-desc">Custom application development, Business Rules, Flow Designer automation, and platform scripting.</p>
+        <ul class="service-includes">
+          <li>Custom app development</li>
+          <li>Business Rule and Script Include build</li>
+          <li>Flow Designer automation</li>
+          <li>Service Catalog configuration</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline" style="margin-top:auto;">Get a Quote</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏥</div>
+        <h3 class="service-title">Instance Health &amp; Optimisation</h3>
+        <p class="service-desc">Audit, clean up, and optimise an existing ServiceNow instance — performance, security, and upgrade readiness.</p>
+        <ul class="service-includes">
+          <li>Instance Scan and audit</li>
+          <li>Performance optimisation</li>
+          <li>ACL and security review</li>
+          <li>Technical debt remediation</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline" style="margin-top:auto;">Get a Quote</a>
+      </div>
+    </div>
+    <div style="text-align:center;"><a href="services.html" class="btn btn-outline btn-lg">View All Services →</a></div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section" style="background:var(--bg-2);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Knowledge Products</span>
+      <h2 class="section-title">Reference Guides &amp; Interview Prep</h2>
+      <p class="section-subtitle">Practical ServiceNow resources built from real hands-on experience. Buy once, own forever.</p>
+    </div>
+    <div class="products-grid">
+      <div class="product-card featured">
+        <div class="product-badge">Best Seller</div>
+        <div class="product-icon">⚡</div>
+        <h3 class="product-title">ServiceNow Integrations Complete Reference Guide</h3>
+        <p class="product-desc">REST API, SOAP, IntegrationHub, MID Server, OAuth 2.0, mTLS — plus 50 integration interview Q&amp;As.</p>
+        <div class="product-meta"><span class="product-pages">26 pages</span><span class="product-dot">·</span><span class="product-format">PDF</span></div>
+        <div class="product-footer"><span class="product-price">$35</span><a href="https://store.nowspectrum.com/l/integration-guide" target="_blank" class="btn btn-primary">Get It Now</a></div>
+      </div>
+      <div class="product-card">
+        <div class="product-icon">🎯</div>
+        <h3 class="product-title">ServiceNow Interview Prep Kit</h3>
+        <p class="product-desc">50 real interview questions with detailed answers. Core Platform, Scripting, Flow Designer, Integrations, Admin.</p>
+        <div class="product-meta"><span class="product-pages">20 pages</span><span class="product-dot">·</span><span class="product-format">PDF</span></div>
+        <div class="product-footer"><span class="product-price">$19</span><a href="https://store.nowspectrum.com/l/interview-prep-kit" target="_blank" class="btn btn-outline">Get It Now</a></div>
+      </div>
+      <div class="product-card">
+        <div class="product-icon">🛠️</div>
+        <h3 class="product-title">ServiceNow Pro Tips &amp; Tricks</h3>
+        <p class="product-desc">50 battle-tested tips for developers and admins. Performance, scripting, Flow Designer mastery, hidden tricks.</p>
+        <div class="product-meta"><span class="product-pages">14 pages</span><span class="product-dot">·</span><span class="product-format">PDF</span></div>
+        <div class="product-footer"><span class="product-price">$19</span><a href="https://store.nowspectrum.com/l/pro-tips" target="_blank" class="btn btn-outline">Get It Now</a></div>
+      </div>
+      <div class="product-card">
+        <div class="product-icon">🤖</div>
+        <h3 class="product-title">Now Assist Complete Practical Guide</h3>
+        <p class="product-desc">How to actually use AI in ServiceNow. Incident summarisation, AI Search, Code Generation — no fluff.</p>
+        <div class="product-meta"><span class="product-pages">4 pages</span><span class="product-dot">·</span><span class="product-format">PDF</span></div>
+        <div class="product-footer"><span class="product-price">$19</span><a href="https://store.nowspectrum.com/l/nowassist-guide" target="_blank" class="btn btn-outline">Get It Now</a></div>
+      </div>
+    </div>
+    <div class="products-cta"><a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary btn-lg">View All Products →</a></div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Free Tips</span>
+      <h2 class="section-title">From the Blog</h2>
+      <p class="section-subtitle">Practical ServiceNow tips, tutorials, and insights — free every week.</p>
+    </div>
+    <div class="blog-grid">
+      <article class="blog-card featured-blog">
+        <div class="blog-tag">Performance</div>
+        <h3 class="blog-title">What is RaptorDB? ServiceNow's New Database Engine Explained</h3>
+        <p class="blog-excerpt">ServiceNow just replaced its database engine — moving from MariaDB to RaptorDB. Here is what it means for developers, admins, and your instance performance.</p>
+        <div class="blog-meta"><span class="blog-date">April 2026</span><a href="blog/what-is-raptordb.html" class="blog-read">Read more →</a></div>
+      </article>
+      <article class="blog-card">
+        <div class="blog-tag">Scripting</div>
+        <h3 class="blog-title">Stop Using toString() in Your GlideRecord Loops</h3>
+        <p class="blog-excerpt">One small change that makes your scripts faster. Here is why getValue() is always the right choice.</p>
+        <div class="blog-meta"><span class="blog-date">April 2026</span><a href="blog/stop-using-tostring.html" class="blog-read">Read more →</a></div>
+      </article>
+      <article class="blog-card">
+        <div class="blog-tag">Flow Designer</div>
+        <h3 class="blog-title">Flow Designer vs Business Rules — The Honest Answer</h3>
+        <p class="blog-excerpt">Everyone says use Flow Designer. But there are still cases where a Business Rule is the right tool.</p>
+        <div class="blog-meta"><span class="blog-date">April 2026</span><a href="blog/flow-designer-vs-business-rules.html" class="blog-read">Read more →</a></div>
+      </article>
+    </div>
+    <div class="blog-cta"><a href="blog.html" class="btn btn-outline btn-lg">View All 50+ Posts →</a></div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="section newsletter-section">
+  <div class="container">
+    <div class="newsletter-box">
+      <div class="newsletter-content">
+        <span class="section-tag">Newsletter</span>
+        <h2 class="newsletter-title">One ServiceNow tip, every week.</h2>
+        <p class="newsletter-desc">Join developers and admins getting practical ServiceNow tips straight to their inbox. Free. No spam. Unsubscribe anytime.</p>
+        <a href="https://nowspectrum.beehiiv.com/subscribe" target="_blank" class="btn btn-primary btn-lg">Subscribe Free →</a>
+      </div>
+      <div class="newsletter-visual">
+        <div class="email-preview">
+          <div class="email-header">
+            <div class="email-dot red"></div><div class="email-dot yellow"></div><div class="email-dot green"></div>
+          </div>
+          <div class="email-body">
+            <div class="email-from">NowSpectrum &lt;nowspectrumhq@gmail.com&gt;</div>
+            <div class="email-subject">This week: Stop using toString() in loops</div>
+            <div class="email-line"></div>
+            <div class="email-line short"></div>
+            <div class="email-code">var state = gr.getValue('state');</div>
+            <div class="email-line"></div>
+            <div class="email-line short"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<script src="components/header.js"></script>
+<script src="components/footer.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

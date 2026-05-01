@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Understand ServiceNow scoped applications — namespace isolation, Application Access settings, and how they affect scripting.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <title>Scoped Applications in ServiceNow: Why They Matter and How to Work with Them | NowSpectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Admin</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">Scoped Applications in ServiceNow: Why They Matter and How to Work with Them</h1>
+      <p class="post-intro">Scoped applications isolate your customisations inside a private namespace, preventing conflicts with other apps and with ServiceNow base system upgrades. If you are building anything intended to be packaged or distributed — or just want clean, upgrade-safe code — scoped apps are the right approach.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+
+      <h2>What is a scoped application?</h2>
+      <p>A scoped application is a container for related customisations — tables, Business Rules, Script Includes, UI components — grouped under a unique namespace identifier (e.g., <code>x_mycompany_myapp</code>). Everything inside the scope is isolated from the global namespace and from other scopes.</p>
+      <p>The alternative is the global scope, where all traditional customisations live. Global scope customisations can conflict with each other and with base system records during upgrades.</p>
+
+      <h2>The namespace</h2>
+      <p>Every scoped app has a unique namespace prefix. Custom tables, Script Includes, and other artifacts in the scope are automatically prefixed: a table named <code>request</code> in scope <code>x_nowspec_myapp</code> becomes <code>x_nowspec_myapp_request</code>. This prevents naming collisions with base system tables and other apps.</p>
+
+      <h2>Application Access settings</h2>
+      <p>Every table inside a scoped app has Application Access settings that control whether other scopes can interact with it:</p>
+      <ul>
+        <li><strong>Accessible from</strong> — All application scopes, This application scope only, or Global</li>
+        <li><strong>Can create</strong> — Allow other scopes to insert records</li>
+        <li><strong>Can read</strong> — Allow other scopes to query records</li>
+        <li><strong>Can write</strong> — Allow other scopes to update records</li>
+        <li><strong>Can delete</strong> — Allow other scopes to delete records</li>
+      </ul>
+      <p>By default, scoped tables are not accessible from other scopes. This is the most common source of confusion when integrating scoped apps — a Business Rule in global scope cannot read a scoped table unless you explicitly allow it.</p>
+
+      <h2>Scripting across scopes</h2>
+      <p>Script Includes in a scoped app are only callable from within that scope by default. To make a Script Include callable from global or other scopes, set <strong>Accessible from</strong> to <strong>All application scopes</strong> on the Script Include record.</p>
+      <pre><code>// In global scope — this FAILS if the Script Include is scope-restricted
+var myUtil = new x_nowspec_myapp.MyUtil();
+
+// Works only if MyUtil has "Accessible from: All application scopes"</code></pre>
+
+      <h2>Creating a scoped application</h2>
+      <ol>
+        <li>Navigate to <strong>System Applications > Studio</strong></li>
+        <li>Click <strong>Create Application</strong></li>
+        <li>Enter a name — ServiceNow generates the namespace prefix automatically</li>
+        <li>Choose scope type: Application (full scoped app) or Global (not scoped)</li>
+      </ol>
+      <p>All subsequent development in Studio happens inside the scope automatically.</p>
+
+      <h2>Update Sets and scoped apps</h2>
+      <p>Scoped app changes are captured in Update Sets just like global changes. However, scoped apps also support Application Files — a cleaner packaging mechanism that captures all app artifacts together. For distributable apps, use Application Files rather than Update Sets.</p>
+
+      <h2>When to use a scoped app</h2>
+      <ul>
+        <li>Any new custom application you are building from scratch</li>
+        <li>Any customisation intended to be packaged and deployed to multiple instances</li>
+        <li>When you want clear ownership boundaries between different development teams</li>
+      </ul>
+      <p>For simple one-off Business Rules or field modifications on base system tables, global scope is still acceptable — scoping adds overhead that is not always warranted for small changes.</p>
+    
+    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

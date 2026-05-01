@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Complete developer reference for the ServiceNow Table API — endpoints, parameters, authentication, filtering, and pagination.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <title>ServiceNow REST API: Table API Complete Reference for Developers | NowSpectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Integrations</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">ServiceNow REST API: Table API Complete Reference for Developers</h1>
+      <p class="post-intro">The Table API is ServiceNow's most-used REST endpoint. It exposes every table in the platform via standard HTTP methods. Here is the complete developer reference for the operations you will actually use.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>Base URL</h2>
+<pre><code>https://[instance].service-now.com/api/now/table/[table_name]</code></pre>
+<h2>Authentication</h2>
+<p>Three options in order of preference:</p>
+<ol>
+<li><strong>OAuth 2.0</strong> — Bearer token in Authorization header (recommended for production)</li>
+<li><strong>Basic Auth</strong> — Base64 encoded username:password in Authorization header</li>
+<li><strong>API Key</strong> — if configured in your instance</li>
+</ol>
+<pre><code>Authorization: Bearer [access_token]
+Authorization: Basic [base64(user:password)]</code></pre>
+<h2>GET — retrieve records</h2>
+<pre><code>GET /api/now/table/incident?sysparm_query=active=true^state=1
+  &sysparm_limit=10
+  &sysparm_offset=0
+  &sysparm_fields=number,short_description,state,assigned_to
+  &sysparm_display_value=true</code></pre>
+<p>Key parameters:</p>
+<ul>
+<li><code>sysparm_query</code> — encoded query string (same syntax as GlideRecord)</li>
+<li><code>sysparm_limit</code> — max records to return (default 10, max 10000)</li>
+<li><code>sysparm_offset</code> — for pagination, skip first N records</li>
+<li><code>sysparm_fields</code> — comma-separated list of fields to return</li>
+<li><code>sysparm_display_value</code> — true to return display values, false for raw values, all for both</li>
+</ul>
+<h2>GET — retrieve single record by sys_id</h2>
+<pre><code>GET /api/now/table/incident/[sys_id]</code></pre>
+<h2>POST — create a record</h2>
+<pre><code>POST /api/now/table/incident
+Content-Type: application/json
+
+{
+  "short_description": "Printer not working",
+  "urgency": "2",
+  "category": "hardware",
+  "caller_id": "6816f79cc0a8016401c5a33be04be441"
+}</code></pre>
+<p>Response: 201 Created with the new record in the body.</p>
+<h2>PATCH — update a record</h2>
+<pre><code>PATCH /api/now/table/incident/[sys_id]
+Content-Type: application/json
+
+{
+  "state": "6",
+  "resolution_notes": "Printer driver reinstalled"
+}</code></pre>
+<h2>DELETE — delete a record</h2>
+<pre><code>DELETE /api/now/table/incident/[sys_id]</code></pre>
+<p>Response: 204 No Content. Use carefully — this is a hard delete.</p>
+<h2>Pagination</h2>
+<pre><code>// Page 1: offset=0, limit=100
+// Page 2: offset=100, limit=100
+// Page 3: offset=200, limit=100</code></pre>
+<p>Check the X-Total-Count response header to get the total number of matching records.</p>
+<h2>Common errors</h2>
+<ul>
+<li>401 — Authentication failed, check token/credentials</li>
+<li>403 — Authenticated but no ACL access to the table or record</li>
+<li>404 — Record not found (check sys_id, check table name)</li>
+<li>429 — Rate limited, implement exponential backoff</li>
+</ul>    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

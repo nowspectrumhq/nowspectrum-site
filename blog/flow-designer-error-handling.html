@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how to implement proper error handling in ServiceNow Flow Designer — Try steps, fault handlers, and retry logic for robust automation.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <title>Flow Designer Error Handling: Try/Catch, Fault Handlers, and Retry Logic | NowSpectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Flow Designer</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">Flow Designer Error Handling: Try/Catch, Fault Handlers, and Retry Logic</h1>
+      <p class="post-intro">A Flow without error handling will silently fail the moment something unexpected happens. REST calls timeout. Records are not found. Rate limits are hit. Here is how to build flows that handle errors gracefully.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>The Try step</h2>
+<p>The Try step wraps a section of your flow. If any step inside the Try throws an error, execution jumps to the Catch section instead of stopping the flow entirely.</p>
+<p>Structure:</p>
+<pre><code>Try
+  → Step: Call External API
+  → Step: Update Record with API response
+Catch (Error)
+  → Step: Log error to table
+  → Step: Send email to admin
+  → Step: Update Record with "API call failed" status</code></pre>
+<h2>What triggers a Catch?</h2>
+<ul>
+<li>REST calls that return HTTP 4xx or 5xx status codes (depending on configuration)</li>
+<li>Script steps that throw exceptions</li>
+<li>Look Up steps that return no records and are configured to throw on no result</li>
+<li>Action steps that fail (spoke errors)</li>
+</ul>
+<h2>Error output variables</h2>
+<p>Inside the Catch block, error data pills are available: error.message, error.stackTrace, error.fault_message. Use these to log meaningful diagnostic information.</p>
+<h2>Retry logic</h2>
+<p>For transient failures (network blips, rate limits), add retry logic in the Catch block:</p>
+<pre><code>Catch (Error)
+  → Condition: Retry count < 3
+    → True: Wait 30 seconds → Run Subflow (same operation)
+    → False: Log permanent failure → Notify admin</code></pre>
+<h2>The Flow error log</h2>
+<p>Every time a flow fails, an error record is created. View at <strong>Flow Designer > Flow Error Records</strong>. Each error shows the execution context, the step that failed, and the full stack trace. This is your first stop when investigating a failing flow.</p>
+<h2>Fault handler on the flow itself</h2>
+<p>You can add a global fault handler at the flow level (not inside a Try step). This catches any unhandled error from anywhere in the flow. Use it as a safety net to ensure critical flows always notify someone on failure.</p>
+<h2>Testing error paths</h2>
+<p>Explicitly test your error handling by triggering failure conditions in your test environment. Pass an invalid record sys_id, point at a downed endpoint, or throw an explicit error in a Script step to verify your Catch blocks work as expected.</p>    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

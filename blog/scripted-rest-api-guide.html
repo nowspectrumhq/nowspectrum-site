@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how to build custom REST API endpoints in ServiceNow using Scripted REST APIs.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <title>Scripted REST APIs in ServiceNow: Build Custom Endpoints From Scratch | NowSpectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Integrations</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">Scripted REST APIs in ServiceNow: Build Custom Endpoints From Scratch</h1>
+      <p class="post-intro">The Table API covers most use cases. But when you need custom logic, custom response shapes, or specific input validation, Scripted REST APIs are the answer. Here is how to build them.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>What is a Scripted REST API?</h2><p>A Scripted REST API lets you expose custom HTTP endpoints on your ServiceNow instance. Unlike the Table API which follows a fixed pattern, you control exactly what the endpoint accepts, what logic it runs, and what it returns.</p><h2>Creating a Scripted REST API</h2><p>Navigate to <strong>System Web Services > Scripted REST APIs</strong>. Create a new API record with a name and API namespace. Then add resources — each resource is a URL path with HTTP methods (GET, POST, PUT, DELETE) and a script that handles requests.</p><h2>Basic GET endpoint example</h2><pre><code>(function process(request, response) {
+    var table = request.queryParams.table || 'incident';
+    var limit = parseInt(request.queryParams.limit) || 10;
+    
+    var gr = new GlideRecord(table);
+    gr.setLimit(limit);
+    gr.query();
+    
+    var results = [];
+    while (gr.next()) {
+        results.push({
+            sys_id: gr.getValue('sys_id'),
+            number: gr.getValue('number'),
+            short_description: gr.getValue('short_description')
+        });
+    }
+    
+    response.setStatus(200);
+    response.setBody(JSON.stringify({ result: results }));
+})(request, response);</code></pre><h2>POST endpoint with request body</h2><pre><code>(function process(request, response) {
+    var body = JSON.parse(request.body.dataString);
+    
+    if (!body.short_description) {
+        response.setStatus(400);
+        response.setBody(JSON.stringify({ error: 'short_description required' }));
+        return;
+    }
+    
+    var gr = new GlideRecord('incident');
+    gr.setValue('short_description', body.short_description);
+    gr.setValue('category', body.category || 'software');
+    var sys_id = gr.insert();
+    
+    response.setStatus(201);
+    response.setBody(JSON.stringify({ result: { sys_id: sys_id } }));
+})(request, response);</code></pre><h2>Authentication and ACLs</h2><p>Scripted REST APIs respect the same ACLs as the Table API. The user whose credentials are used for the API call must have access to the tables and records the script interacts with. You can add additional role checks inside the script itself.</p><h2>API Explorer</h2><p>ServiceNow includes an API Explorer at <strong>System Web Services > REST API Explorer</strong> where you can test your endpoints interactively.</p>
+    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Master ServiceNow Import Sets — staging tables, transform maps, coalesce fields, and transform scripts for bulk data loading.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <title>Import Sets in ServiceNow: The Complete Guide to Bulk Data Loading | NowSpectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Integrations</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">Import Sets in ServiceNow: The Complete Guide to Bulk Data Loading</h1>
+      <p class="post-intro">Import Sets are how you load bulk data into ServiceNow from CSV files, Excel spreadsheets, JDBC connections, or REST sources. Here is the complete process from staging to target table.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>The Import Set process</h2><ol><li>Data arrives in a <strong>staging table</strong> (import set row table) — raw, untransformed</li><li>A <strong>Transform Map</strong> defines how staging columns map to target table fields</li><li>The transform runs — records are created or updated in the target table</li></ol><h2>Creating a staging table</h2><p>Navigate to <strong>System Import Sets > Create Table</strong> or load a CSV file and ServiceNow generates the staging table automatically from the column headers.</p><h2>Loading data via CSV</h2><p>Navigate to <strong>System Import Sets > Load Data</strong>. Select the data source (file upload, FTP, JDBC, REST) and the staging table. ServiceNow creates Import Set rows — one per source row.</p><h2>Transform Maps</h2><p>The Transform Map tells ServiceNow how to convert staging rows into target records. Each field mapping has: Source field (staging), Target field (target table), and optionally a coerce script.</p><h2>Coalesce fields</h2><p>Coalesce is how you prevent duplicates. If you set a field as a coalesce key, ServiceNow will check whether a record already exists in the target table with the same value for that field. If it does, it updates that record rather than creating a new one.</p><pre><code>// Example: coalesce on email_address to prevent duplicate user imports
+// If a user with this email exists → update it
+// If no user exists → insert new</code></pre><h2>Transform scripts</h2><p>For complex transformations, add a transform script to the Transform Map:</p><pre><code>// Map a status code from source to ServiceNow state value
+if (source.status == 'OPEN') {
+    target.state = 1;
+} else if (source.status == 'RESOLVED') {
+    target.state = 6;
+}
+// Skip this row if no valid status
+if (!target.state) {
+    ignore = true;
+}</code></pre><h2>Scheduled data loads</h2><p>For recurring loads (daily file from HR, nightly CMDB sync), create a Data Source that points to an FTP location or REST endpoint, then schedule it. ServiceNow pulls the data on schedule and transforms it automatically.</p>
+    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

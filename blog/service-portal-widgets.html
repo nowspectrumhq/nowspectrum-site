@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how to build custom Service Portal widgets in ServiceNow — AngularJS 1.x client controllers, server scripts, and HTML templates.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <title>Service Portal Development: Building Custom Widgets in ServiceNow | NowSpectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Modules</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">Service Portal Development: Building Custom Widgets in ServiceNow</h1>
+      <p class="post-intro">Service Portal is ServiceNow's end-user facing portal framework, built on AngularJS 1.x. Custom widgets let you build interactive UI components that connect to ServiceNow data. Here is how to build them.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>Widget structure</h2><p>Every widget has four parts:</p><ol><li><strong>HTML Template</strong> — the rendered markup, using AngularJS binding syntax</li><li><strong>Client Controller</strong> — AngularJS controller for client-side logic</li><li><strong>Server Script</strong> — runs on the server when the widget loads</li><li><strong>CSS / SCSS</strong> — widget-specific styles</li></ol><h2>Data flow: server to client</h2><p>The server script runs first when the widget loads. It populates the <code>data</code> object with server-side data. This data is then available in the client controller via <code>c.data</code>:</p><pre><code>// Server Script
+(function() {
+    data.incidents = [];
+    var gr = new GlideRecord('incident');
+    gr.addEncodedQuery('active=true^assigned_to=javascript:gs.getUserID()');
+    gr.setLimit(10);
+    gr.query();
+    while (gr.next()) {
+        data.incidents.push({
+            number: gr.getValue('number'),
+            short_description: gr.getValue('short_description'),
+            state: gr.getDisplayValue('state')
+        });
+    }
+})();</code></pre><pre><code>// HTML Template
+&lt;div&gt;
+  &lt;div ng-repeat="inc in c.data.incidents"&gt;
+    &lt;strong&gt;{{inc.number}}&lt;/strong&gt; — {{inc.short_description}}
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre><h2>Client-to-server communication</h2><p>To call the server from the client (after initial load), use <code>c.server.get()</code>:</p><pre><code>// Client Controller
+api.controller = function($scope, $timeout) {
+    var c = this;
+    
+    c.refreshData = function() {
+        c.server.get({action: 'refresh', filter: c.data.filter})
+            .then(function(response) {
+                c.data.incidents = response.data.incidents;
+            });
+    };
+};
+
+// Server Script - handle client calls
+if (input && input.action == 'refresh') {
+    // Re-query with new filter
+    data.incidents = getIncidents(input.filter);
+}</code></pre><h2>spUtil service</h2><p><code>spUtil</code> is the Service Portal utility service available in client controllers. Key methods: <code>spUtil.addInfoMessage()</code>, <code>spUtil.addErrorMessage()</code>, <code>spUtil.openModal()</code> for modals.</p>
+    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

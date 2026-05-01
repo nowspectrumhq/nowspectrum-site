@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A guide to using ServiceNow Instance Scan to identify technical debt, anti-patterns, and security issues in your instance.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+  <title>ServiceNow Instance Scan: What It Is and How to Use It | NowSpectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<div style="padding-top:64px">
+  <div class="post-layout">
+    <div class="post-header">
+      <div class="post-tag-row">
+        <span class="blog-tag">Admin</span>
+        <span class="post-date">April 2026</span>
+      </div>
+      <h1 class="post-title">ServiceNow Instance Scan: What It Is and How to Use It</h1>
+      <p class="post-intro">Instance Scan is a built-in platform tool that audits your ServiceNow instance against a library of best practices. It finds anti-patterns, performance issues, and security gaps you probably did not know existed.</p>
+    </div>
+    <div class="post-divider"></div>
+    <div class="post-body">
+<h2>What Instance Scan checks</h2><p>Instance Scan runs a set of checks against your instance configuration and custom code. Categories include: Performance (slow queries, large table scans), Security (ACL gaps, exposed fields), Upgradability (changes that break on upgrade), Best Practices (coding patterns).</p><h2>Running an Instance Scan</h2><p>Navigate to <strong>System Diagnostics > Instance Scan</strong>. You can run all checks or select specific suites. Larger instances take longer — expect 15-60 minutes for a full scan on a well-populated instance.</p><h2>Reading the results</h2><p>Results are categorised by Severity (Critical, High, Medium, Low) and Type. Each finding links to the specific record causing the issue — click it to navigate directly to the offending Business Rule, Script Include, or configuration item.</p><h2>Critical findings to prioritise</h2><p><strong>Security findings:</strong> ACLs that allow wider access than intended, exposed sensitive fields, missing CRUD restrictions.</p><p><strong>Performance findings:</strong> GlideRecord queries with no conditions on large tables, Business Rules with expensive logic running on every save, Script Includes that load unnecessary data.</p><h2>Upgradeability findings</h2><p>ServiceNow flags customisations that modify base system records (rather than extending via scoped apps). These changes risk being overwritten on upgrades. Instance Scan identifies them so you can plan ahead.</p><h2>Scheduling regular scans</h2><p>Set up a scheduled Instance Scan to run monthly. Configure it to email results to your admin team. Treat it like a code review — a fresh set of eyes on your instance health every month catches problems before they become incidents.</p><h2>Not everything is critical</h2><p>Instance Scan is opinionated. Some findings are genuine problems; others are acceptable tradeoffs. Review each finding in context before treating it as a must-fix.</p>
+    </div>
+    <div class="post-cta-box">
+      <h3>Want the complete reference?</h3>
+      <p>This article is part of the NowSpectrum knowledge library. Browse all products for cheat sheets, interview prep, and deep-dive reference guides.</p>
+      <a href="https://store.nowspectrum.com" target="_blank" class="btn btn-primary">Browse All Products →</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+
+<script src="../components/header.js"></script>
+<script src="../components/footer.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>
