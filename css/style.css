@@ -112,7 +112,8 @@ ul { list-style: none; }
   transition: max-height 0.35s ease, padding 0.35s ease;
 }
 .nav-mobile.open {
-  max-height: 600px;
+  max-height: 1000px;
+  overflow: visible;
   padding-top: 20px;
   padding-bottom: 28px;
 }
@@ -129,12 +130,7 @@ ul { list-style: none; }
   color: #fff;
   background: rgba(255,255,255,0.08);
 }
-.nav-mobile-cta {
-  margin-top: 12px !important;
-  display: block !important;
-  text-align: center;
-  width: 100%;
-}
+
 
 /* ── HERO ────────────────────────────────────────────────── */
 .hero {
