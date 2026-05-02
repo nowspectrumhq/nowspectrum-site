@@ -37,7 +37,7 @@
     + '<a href="' + root + 'blog.html" class="nav-link' + active('blog') + '">Blog</a>'
     + '<a href="' + root + 'about.html" class="nav-link' + active('about') + '">About</a>'
     + '<a href="' + root + 'contact.html" class="nav-link' + active('contact') + '">Contact</a>'
-    + '<a href="' + root + 'get-a-quote.html" class="btn btn-primary nav-mobile-cta">Get a Quote</a>'
+    + '<a href="' + root + 'get-a-quote.html" class="btn btn-primary" style="margin-top:12px;display:block;text-align:center;">Get a Quote</a>'
     + '</div>'
     + '</nav>';
 
@@ -45,43 +45,48 @@
   var el = document.getElementById('site-header');
   if (el) el.innerHTML = html;
 
-  // Attach toggle AFTER injection using setTimeout to guarantee DOM is ready
-  setTimeout(function () {
+  // Use event delegation on document body — guaranteed to work after any injection
+  // This fires on every click on the page and checks if it hit the toggle button
+  document.body.addEventListener('click', function (e) {
+    var clickedToggle = e.target.closest ? e.target.closest('#navToggle') : null;
+    var clickedMobileLink = e.target.closest ? e.target.closest('#navMobile a') : null;
+    var clickedInsideNav = e.target.closest ? e.target.closest('#nav') : null;
+
     var toggle = document.getElementById('navToggle');
     var mobile = document.getElementById('navMobile');
-    var nav = document.getElementById('nav');
 
     if (!toggle || !mobile) return;
 
-    // THE FIX: toggle open class on BOTH toggle button AND mobile menu
-    toggle.addEventListener('click', function (e) {
+    if (clickedToggle) {
       e.stopPropagation();
-      toggle.classList.toggle('open');
-      mobile.classList.toggle('open'); // THIS was the missing line
-    });
-
-    // Close when any mobile link is tapped
-    var links = mobile.querySelectorAll('a');
-    for (var i = 0; i < links.length; i++) {
-      links[i].addEventListener('click', function () {
-        toggle.classList.remove('open');
+      // Toggle both — this is the critical fix
+      var isOpen = mobile.classList.contains('open');
+      if (isOpen) {
         mobile.classList.remove('open');
-      });
+        toggle.classList.remove('open');
+      } else {
+        mobile.classList.add('open');
+        toggle.classList.add('open');
+      }
+      return;
     }
 
-    // Close when tapping outside
-    document.addEventListener('click', function (e) {
-      if (nav && !nav.contains(e.target)) {
-        toggle.classList.remove('open');
-        mobile.classList.remove('open');
-      }
-    });
+    if (clickedMobileLink) {
+      mobile.classList.remove('open');
+      toggle.classList.remove('open');
+      return;
+    }
 
-    // Scroll effect
-    window.addEventListener('scroll', function () {
-      if (nav) nav.classList.toggle('scrolled', window.scrollY > 20);
-    });
+    if (!clickedInsideNav) {
+      mobile.classList.remove('open');
+      toggle.classList.remove('open');
+    }
+  }, true); // useCapture: true — fires before anything else on the page
 
-  }, 0);
+  // Scroll effect
+  window.addEventListener('scroll', function () {
+    var nav = document.getElementById('nav');
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
 
 })();
