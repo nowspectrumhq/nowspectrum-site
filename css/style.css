@@ -395,10 +395,12 @@ ul { list-style: none; }
 .contact-cta-box h2 { font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 12px; }
 .contact-cta-box p { font-size: 16px; color: rgba(255,255,255,0.6); margin-bottom: 28px; max-width: 480px; margin-left: auto; margin-right: auto; }
 @media (max-width: 900px) {
+  .nav-inner { gap: 0; }
+  .nav-logo { margin-right: auto; }
   .blog-grid { grid-template-columns: 1fr; }
   .newsletter-box { grid-template-columns: 1fr; gap: 36px; padding: 40px 32px; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-  .nav-links, .nav > .btn-primary { display: none; }
+  .nav-links, .nav-cta { display: none; }
   .nav-toggle { display: flex; }
 }
 @media (max-width: 640px) {
