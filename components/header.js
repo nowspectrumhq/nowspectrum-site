@@ -1,5 +1,4 @@
 // NowSpectrum — Shared Header Component
-// Single source of truth for nav — edit ONLY this file to update nav everywhere
 
 (function () {
   const path = window.location.pathname;
@@ -47,21 +46,52 @@
   </div>
 </nav>`;
 
+  // Inject nav
   const container = document.getElementById('site-header');
   if (container) container.outerHTML = nav;
 
-  // Scroll effect
-  window.addEventListener('scroll', () => {
-    document.getElementById('nav')?.classList.toggle('scrolled', window.scrollY > 20);
-  });
+  // Wait for DOM then attach events
+  function initNav() {
+    const navEl = document.getElementById('nav');
+    const toggle = document.getElementById('navToggle');
+    const mobile = document.getElementById('navMobile');
 
-  // Mobile toggle
-  document.addEventListener('click', (e) => {
-    if (e.target.closest('#navToggle')) {
-      document.getElementById('navMobile')?.classList.toggle('open');
-    }
-    if (e.target.closest('.nav-mobile .nav-link, .nav-mobile .btn')) {
-      document.getElementById('navMobile')?.classList.remove('open');
-    }
-  });
+    if (!toggle || !mobile) return;
+
+    // Mobile toggle
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      mobile.classList.toggle('open');
+      toggle.classList.toggle('open');
+    });
+
+    // Close when a link is clicked
+    mobile.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        mobile.classList.remove('open');
+        toggle.classList.remove('open');
+      });
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', function (e) {
+      if (!navEl.contains(e.target)) {
+        mobile.classList.remove('open');
+        toggle.classList.remove('open');
+      }
+    });
+
+    // Scroll effect
+    window.addEventListener('scroll', function () {
+      navEl.classList.toggle('scrolled', window.scrollY > 20);
+    });
+  }
+
+  // Run after DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNav);
+  } else {
+    initNav();
+  }
+
 })();
