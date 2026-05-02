@@ -1,4 +1,4 @@
-// NowSpectrum — Shared Header Component
+// NowSpectrum — Header injection only. Toggle logic is in js/main.js
 
 (function () {
   var path = window.location.pathname;
@@ -41,52 +41,6 @@
     + '</div>'
     + '</nav>';
 
-  // Inject nav
   var el = document.getElementById('site-header');
   if (el) el.innerHTML = html;
-
-  // Use event delegation on document body — guaranteed to work after any injection
-  // This fires on every click on the page and checks if it hit the toggle button
-  document.body.addEventListener('click', function (e) {
-    var clickedToggle = e.target.closest ? e.target.closest('#navToggle') : null;
-    var clickedMobileLink = e.target.closest ? e.target.closest('#navMobile a') : null;
-    var clickedInsideNav = e.target.closest ? e.target.closest('#nav') : null;
-
-    var toggle = document.getElementById('navToggle');
-    var mobile = document.getElementById('navMobile');
-
-    if (!toggle || !mobile) return;
-
-    if (clickedToggle) {
-      e.stopPropagation();
-      // Toggle both — this is the critical fix
-      var isOpen = mobile.classList.contains('open');
-      if (isOpen) {
-        mobile.classList.remove('open');
-        toggle.classList.remove('open');
-      } else {
-        mobile.classList.add('open');
-        toggle.classList.add('open');
-      }
-      return;
-    }
-
-    if (clickedMobileLink) {
-      mobile.classList.remove('open');
-      toggle.classList.remove('open');
-      return;
-    }
-
-    if (!clickedInsideNav) {
-      mobile.classList.remove('open');
-      toggle.classList.remove('open');
-    }
-  }, true); // useCapture: true — fires before anything else on the page
-
-  // Scroll effect
-  window.addEventListener('scroll', function () {
-    var nav = document.getElementById('nav');
-    if (nav) nav.classList.toggle('scrolled', window.scrollY > 20);
-  });
-
 })();
