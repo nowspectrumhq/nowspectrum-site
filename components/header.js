@@ -12,7 +12,7 @@
     return '';
   }
 
-  const nav = `
+  const navHTML = `
 <nav class="nav" id="nav">
   <div class="nav-inner">
     <a href="${root}index.html" class="nav-logo">
@@ -46,52 +46,45 @@
   </div>
 </nav>`;
 
-  // Inject nav
-  const container = document.getElementById('site-header');
-  if (container) container.outerHTML = nav;
+  // Inject nav into placeholder
+  var container = document.getElementById('site-header');
+  if (container) {
+    container.innerHTML = navHTML;
+  }
 
-  // Wait for DOM then attach events
-  function initNav() {
-    const navEl = document.getElementById('nav');
-    const toggle = document.getElementById('navToggle');
-    const mobile = document.getElementById('navMobile');
+  // Attach events using event delegation on document — works regardless of injection timing
+  document.addEventListener('click', function (e) {
+    var toggle = e.target.closest('#navToggle');
+    var mobileLink = e.target.closest('#navMobile a');
+    var outsideNav = !e.target.closest('#nav');
 
-    if (!toggle || !mobile) return;
+    var mobile = document.getElementById('navMobile');
+    var toggleBtn = document.getElementById('navToggle');
 
-    // Mobile toggle
-    toggle.addEventListener('click', function (e) {
+    if (toggle) {
+      e.preventDefault();
       e.stopPropagation();
-      mobile.classList.toggle('open');
-      toggle.classList.toggle('open');
-    });
+      if (mobile) mobile.classList.toggle('open');
+      if (toggleBtn) toggleBtn.classList.toggle('open');
+      return;
+    }
 
-    // Close when a link is clicked
-    mobile.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        mobile.classList.remove('open');
-        toggle.classList.remove('open');
-      });
-    });
+    if (mobileLink) {
+      if (mobile) mobile.classList.remove('open');
+      if (toggleBtn) toggleBtn.classList.remove('open');
+      return;
+    }
 
-    // Close when clicking outside
-    document.addEventListener('click', function (e) {
-      if (!navEl.contains(e.target)) {
-        mobile.classList.remove('open');
-        toggle.classList.remove('open');
-      }
-    });
+    if (outsideNav) {
+      if (mobile) mobile.classList.remove('open');
+      if (toggleBtn) toggleBtn.classList.remove('open');
+    }
+  });
 
-    // Scroll effect
-    window.addEventListener('scroll', function () {
-      navEl.classList.toggle('scrolled', window.scrollY > 20);
-    });
-  }
-
-  // Run after DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initNav);
-  } else {
-    initNav();
-  }
+  // Scroll effect
+  window.addEventListener('scroll', function () {
+    var nav = document.getElementById('nav');
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
 
 })();
